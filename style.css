@@ -330,7 +330,7 @@ body.menu-open .nav{transform:none;opacity:1;visibility:visible;pointer-events:a
   .work-media[data-shape="wide"]{max-width:none}
   .shots{justify-content:center;gap:14px;overflow:visible;align-items:start}
   .shots li{padding:0}
-  .shots img{box-shadow:0 10px 22px -18px rgba(16,26,46,.35);transition:transform 240ms var(--ease-out),box-shadow 240ms var(--ease-out)}
+  .shots img{width:min(252px,calc((100% - 28px)/3),34vh);box-shadow:0 10px 22px -18px rgba(16,26,46,.35);transition:transform 240ms var(--ease-out),box-shadow 240ms var(--ease-out)}
   .shots li:nth-child(2),.shots li:nth-child(3){margin-top:0}
   .shots img:hover{transform:translateY(-3px) rotate(0deg);box-shadow:0 16px 30px -20px rgba(16,26,46,.4)}
   .work-media[data-shape="wide"] img{width:100%;max-width:none;

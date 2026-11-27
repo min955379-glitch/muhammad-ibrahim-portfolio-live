@@ -85,3 +85,34 @@ rots, so it is gone from the page).
 3. The Fiverr link is the `paid_promotions` link you gave, not a profile URL.
 4. The "How I work" and "Nothing on this page is a client review..." lines (they state your honesty rules back
    to the visitor - remove them if you find them too blunt).
+
+## Preview-image rules (why nothing can look stretched)
+
+Checked with ImageMagick `identify` + a script that compares every `width`/`height`
+attribute in `index.html` with the real file, and greps `style.css` for any fixed
+height on an image.
+
+| Preview | File | Real size | Drawn at 360x640 | Drawn at 1280x800 |
+| --- | --- | --- | --- | --- |
+| Mental Maths x3 | `images/mental-maths-*.webp` | 620x1262 | 218 x 444 | 168 x 342 each |
+| Street Food x3 | `images/street-food-1..3.webp` | 620x1102 | 218 x 388 | 168 x 298 each |
+| BluePeak Terminal | `images/bluepeak-og.webp` | 1200x630 | 320 x 168 | 533 x 280 |
+| Blue Peak Store / Fitness Pro | `images/fitness-pro.webp` | 1000x563 | 320 x 180 | 200 x 113 |
+
+Rules that make this hold:
+
+* `img,svg{max-width:100%;height:auto}` - without `height:auto` an image with
+  `width`/`height` attributes shrinks its width but keeps its height on older
+  Android engines, which is what makes a screenshot look pulled long.
+* `[data-shape="wide"] img{aspect-ratio:1200/630}` / `[data-shape="phone"] img{aspect-ratio:620/1262}`
+  plus `object-fit:contain`, so the box can never be a different shape than the file.
+* One frame rule for every preview: `border:1px solid var(--line)`, `border-radius:var(--radius)`,
+  `background:var(--surface)` - the same values the Street Food row uses.
+* Phone shots are drawn `min(252px, 100%, 34vh)`: about 250-280 px wide when there is room,
+  never taller than ~70% of the screen height, three side by side at 1280, swipeable below that.
+* `alt` on every image, `loading="lazy" decoding="async"`, all WebP under 40 KB.
+
+Not checked (honest gaps): no real browser and no real phone in this sandbox - the
+drawn sizes above are computed from the CSS by hand, not measured by a rendering
+engine. The live page was re-read after deploy and lists the right files, but image
+HTTP status over `vercel.app` cannot be seen from here (`fetch_page` returns text only).
