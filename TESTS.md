@@ -47,9 +47,14 @@ production alias `https://muhammad-ibrahim-portfolio-live.vercel.app/`.
 - **Not installed: Impeccable, Awesome Design MD, Vercel web-design-guidelines, Chrome DevTools MCP.**
   I confirmed the first three exist on GitHub and read the guidelines repo file list, but the design review
   here is my own manual pass, not a tool run.
-- **Deployment Protection: not changed by me.** The connector exposes no setting for it and
-  `api.vercel.com` is blocked from the sandbox. I did verify the public page loads without a login today,
-  so nothing needs changing unless Vercel later starts asking for one.
+- **Deployment Protection: not changed by me** (the connector exposes no setting for it and `api.vercel.com`
+  is blocked from the sandbox). Measured today: the production alias
+  `https://muhammad-ibrahim-portfolio-live.vercel.app/` loads with **no login**, but a deployment-specific URL
+  like `muhammad-ibrahim-portfolio-live-<hash>-min955379-6910.vercel.app` **is** blocked with
+  "Log in to Vercel" (that is `ssoProtection: all_except_custom_domains`). So: share only the alias URL. If you
+  want every Vercel URL public, disable it in Dashboard -> project -> Settings -> Deployment Protection.
+- Note for re-checks: the page fetcher can return a cached copy for a few seconds after a deploy. A cache-busting
+  query (`/?v=2`) showed the new content, which matched the deployed commit exactly.
 
 ## Tech-tag corrections (repo evidence, this pass)
 
