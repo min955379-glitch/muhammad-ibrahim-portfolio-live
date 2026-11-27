@@ -118,3 +118,64 @@ Not checked (honest gaps): no real browser and no real phone in this sandbox - t
 drawn sizes above are computed from the CSS by hand, not measured by a rendering
 engine. The live page was re-read after deploy and lists the right files, but image
 HTTP status over `vercel.app` cannot be seen from here (`fetch_page` returns text only).
+
+## Premium layer (this round) - what is on, what is off, and how it was measured
+
+Files: `style.css` (premium block at the end), `script.js` (premium block at the end), `index.html`
+(hero restructure, 8 real screenshots, marquee, progress line).
+
+| Effect | Where | On | Off when |
+| --- | --- | --- | --- |
+| Night-desk hero panel (palette B) | `#hero` | always | never (structure) |
+| Aurora drift, 3 blobs, transform only | `.hero-bg` | 44s alternate | `prefers-reduced-motion`, `html.lite` |
+| Grain (inline SVG, no file) | `.hero-grain` | opacity .05 | stays (cheap) |
+| Frosted glass | nav bar, hero card, contact card | 3 surfaces | `@supports not (backdrop-filter)` -> solid fill |
+| Sheen, one 600 ms pass | `[data-shine]` x8 | on reveal, and on hover (desktop) | lite / reduced motion |
+| Floor reflection | `.mark-refl` | always (CSS mask) | stays |
+| Gold dot + ring + label | `.cur-dot`, `.cur-ring` | only `(hover:hover) and (pointer:fine)` | touch, lite, reduced motion; **native cursor is never hidden** |
+| Pointer spotlight in hero | `.hero-spot` | desktop, while the pointer is in the hero | same |
+| Scroll progress line | `#progress` | `scaleX` in one rAF | lite / reduced motion |
+| Number counters | `[data-count]` (3 nodes) | rAF, 700 ms, one shot | lite; final value is the HTML text |
+| Magnetic WhatsApp button | `[data-magnet]` | max 8 px, desktop only | same |
+| Hero letter reveal | `.name.split` | 15 letters, 26 ms apart, one shot | lite / reduced motion (plain heading) |
+| Tech marquee | `.mq` | 46s linear, pause on hover | lite / reduced motion -> static row |
+| Lit border on rows, underline on link pills | `.list-row::before`, `.lnk::before` | hover + focus-within | stays (transform only) |
+| Section rail labels | `.sec-head .label` at 1280 | vertical marker | stays |
+
+**`lite` mode = one flag** in `script.js`: `prefers-reduced-motion: reduce`, OR a coarse/absent
+hover (`(hover: none)` / `(pointer: coarse)`), OR `Save-Data`, OR `deviceMemory <= 2`, OR
+`effectiveType` `2g`/`slow-2g`. Core count is deliberately **not** used (cheap phones report plenty of cores).
+
+Dropped from the approved plan, on purpose:
+* **3D tilt on project images** - your instruction, and it was the most likely effect to cost frames.
+* The sticky section label became an absolutely-positioned vertical rail at 1280 px: a real
+  `position:sticky` label needed every section's markup re-nested, which risked the content you asked
+  me to leave word-for-word.
+
+### Checks run for this round
+
+* `node /home/user/assetgen/check.js` - 0 failures, 2 warnings. Budgets raised as agreed:
+  CSS 60 KB (**32.1 KB**), JS 25 KB (**12.6 KB**), total 700 KB (**633.5 KB**), first visit 250 KB (**138.6 KB**).
+  It also now proves: every hex in the CSS belongs to palette A or B, **no green anywhere**, no price or
+  testimonial text, every image WebP under 100 KB with `alt`, `loading="lazy"`, `width`/`height`, `height:auto`,
+  tap targets >= 48 px, infinite animations stopped by both reduced-motion and lite mode.
+* `node /home/user/assetgen/dom-test.js` - menu, keyboard, focus trap, reveal, scramble, no-IO fallback: all pass.
+* `node /home/user/assetgen/premium-test.js` (new) - runs the page in jsdom with a **stubbed
+  `matchMedia` for a desktop mouse**, so the new paths really execute: cursor created and moved,
+  spotlight armed, letter split into 15 and revealed, heading text intact, progress `scaleX`,
+  nav flips to day glass, counters land on 6 / 6 / 10, magnet capped inside 8 px, sheen armed on 8 surfaces,
+  `@supports` fallback present, `cursor:none` never used. Then the same page with `hover:none` (touch) and
+  with `prefers-reduced-motion` - all effects absent, all content visible, no errors.
+* `node /home/user/assetgen/contrast.js` (new) - composites the translucent layers (aurora tint -> glass fill ->
+  text alpha) and applies WCAG ratios to 22 pairs: worst measured pair **5.11:1**, everything else
+  5.74:1 to 16.06:1. Glass areas included.
+
+### Not tested (honest)
+
+* No real browser and no real Android phone in this sandbox: no pixels, no FPS, no paint timing,
+  no Lighthouse, no DevTools device emulation. Impeccable / Chrome DevTools MCP / Vercel's
+  web-design-guidelines MCP are not installed here.
+* The visual look of the glass, the sheen timing, the cursor weight and the marquee speed are therefore
+  **computed and reviewed by reading the CSS, not seen**. Tell me what feels wrong and I will tune it.
+* Image HTTP status over `vercel.app` cannot be read from the sandbox (`fetch_page` returns text only),
+  so I verify the local file list, the repo file list from Vercel and the live HTML instead.

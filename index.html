@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Muhammad Ibrahim - Software Engineering Student &amp; AI Builder</title>
 <meta name="description" content="Muhammad Ibrahim builds websites, apps, thumbnails, posters and AI videos from Abbottabad, Pakistan. Real projects, honest wording, fast static pages. WhatsApp is the fastest way to reach me.">
-<meta name="theme-color" content="#101A2E">
+<meta name="theme-color" content="#0B1220">
 <meta name="color-scheme" content="light">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Muhammad Ibrahim">
@@ -26,6 +26,7 @@
 <script src="/script.js" defer></script>
 </head>
 <body>
+<div class="progress" id="progress" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="bar" id="top">
@@ -59,25 +60,46 @@
 
 <main id="main">
 
-<section class="hero">
-  <div class="wrap">
-    <p class="kicker"><span class="tick" aria-hidden="true"></span><span data-scramble>SOFTWARE ENGINEERING STUDENT</span> &middot; ABBOTTABAD, PAKISTAN</p>
-    <h1 class="name">Muhammad <br>Ibrahim</h1>
-    <p class="hero-sub">Software Engineering student and <b>AI-assisted builder &amp; designer</b>. I build websites, apps, thumbnails, posters and AI videos, then test and polish every result myself.</p>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="https://wa.me/923485581969" rel="noopener" target="_blank">
-        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Zm0 2a7 7 0 1 1-3.6 13l-.4-.2-2.2.6.6-2.1-.2-.4A7 7 0 0 1 12 5Zm-2.7 4.6c-.2 0-.4.1-.6.3-.3.3-.7.8-.5 1.6.3 1.1 1.2 2.4 2.6 3.4 1.7 1.2 3 1.4 3.7 1.1.4-.2.7-.7.8-1.1 0-.2 0-.4-.1-.5l-1.4-.7c-.2-.1-.4 0-.6.2l-.4.5c-.1.1-.3.1-.4 0-.6-.3-1.1-.7-1.5-1.2-.2-.2-.2-.3 0-.5l.3-.4c.1-.2.1-.3 0-.5l-.6-1.1c-.1-.2-.2-.2-.3-.2z"/></svg>
-        <span>Message me on WhatsApp</span>
-      </a>
-      <a class="btn btn-text" href="#work"><span>See my work</span><svg class="ico ico-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v13m0 0-5-5m5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<section class="hero" id="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div class="hero-spot" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-main">
+      <p class="kicker"><span class="tick" aria-hidden="true"></span><span data-scramble>SOFTWARE ENGINEERING STUDENT</span> &middot; ABBOTTABAD, PAKISTAN</p>
+      <h1 class="name" data-split>Muhammad <br>Ibrahim</h1>
+      <p class="hero-sub">Software Engineering student and <b>AI-assisted builder &amp; designer</b>. I build websites, apps, thumbnails, posters and AI videos, then test and polish every result myself.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" data-magnet href="https://wa.me/923485581969" rel="noopener" target="_blank" data-cursor="Open">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Zm0 2a7 7 0 1 1-3.6 13l-.4-.2-2.2.6.6-2.1-.2-.4A7 7 0 0 1 12 5Zm-2.7 4.6c-.2 0-.4.1-.6.3-.3.3-.7.8-.5 1.6.3 1.1 1.2 2.4 2.6 3.4 1.7 1.2 3 1.4 3.7 1.1.4-.2.7-.7.8-1.1 0-.2 0-.4-.1-.5l-1.4-.7c-.2-.1-.4 0-.6.2l-.4.5c-.1.1-.3.1-.4 0-.6-.3-1.1-.7-1.5-1.2-.2-.2-.2-.3 0-.5l.3-.4c.1-.2.1-.3 0-.5l-.6-1.1c-.1-.2-.2-.2-.3-.2z"/></svg>
+          <span>Message me on WhatsApp</span>
+        </a>
+        <a class="btn btn-text" href="#work" data-cursor="Go"><span>See my work</span><svg class="ico ico-down" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v13m0 0-5-5m5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
     </div>
+    <aside class="hero-aside">
+      <div class="glass hero-card" data-shine>
+        <div class="hc-top">
+          <span class="mark-stack" aria-hidden="true">
+            <span class="mark mark-lg">MI</span>
+            <span class="mark mark-lg mark-refl">MI</span>
+          </span>
+          <p class="hc-t">Two palettes, one system</p>
+        </div>
+        <ul class="sw">
+          <li><span class="sw-k">A &middot; WARM PAPER</span><span class="sw-set"><i style="background:#F6F1E7"></i><i style="background:#101A2E"></i><i style="background:#1B2C4B"></i><i style="background:#B4884A"></i><i style="background:#3B4BA8"></i></span></li>
+          <li><span class="sw-k">B &middot; NIGHT DESK</span><span class="sw-set"><i style="background:#0B1220"></i><i style="background:#131E33"></i><i style="background:#F3EDE1"></i><i style="background:#66B8E8"></i><i style="background:#D6A45C"></i></span></li>
+        </ul>
+        <p class="hc-f">Every colour on this page comes from these two sets. Static HTML, CSS and vanilla JS: no framework, no build step, no tracking script.</p>
+      </div>
+    </aside>
   </div>
 </section>
 
 <section class="proof" aria-label="What is real on this page">
   <div class="wrap proof-in" data-stagger>
-    <div class="proof-item" data-reveal><b>6</b><span>featured projects on this page</span></div>
-    <div class="proof-item" data-reveal><b>6 of 10</b><span>shown projects run on a public URL</span></div>
+    <div class="proof-item" data-reveal><b data-count="6">6</b><span>featured projects on this page</span></div>
+    <div class="proof-item" data-reveal><b><span data-count="6">6</span> of <span data-count="10">10</span></b><span>shown projects run on a public URL</span></div>
     <div class="proof-item" data-reveal><b>PK &middot; UK &middot; USA</b><span>small businesses and creators I work with</span></div>
     <div class="proof-item" data-reveal><b>HTML + CSS + JS</b><span>no framework, no tracking, one page</span></div>
   </div>
@@ -102,18 +124,22 @@
           <p class="status ok">Live on the web</p>
           <p class="work-links"><a class="lnk" href="https://review-nudge-alpha.vercel.app">Open live site</a><a class="lnk" href="https://github.com/min955379-glitch/ReviewNudge">GitHub repo</a></p>
         </div>
-        <div class="work-media" data-shape="wide">
-          <div class="mock" role="img" aria-label="No screenshot: this card is a drawn label, not a picture of the site. ReviewNudge live site - sign-up needed to see the app.">
-            <span class="mock-url">review-nudge-alpha.vercel.app</span>
-            <span class="mock-big">ReviewNudge</span>
-            <span class="mock-line">Public landing page is live. The app itself sits behind sign-up.</span>
-            <span class="mock-chip">no screenshot</span>
+        <div class="work-media r r-620x1034" data-shape="phone" data-shine>
+          <div class="media-head">
+            <span class="mh-url">review-nudge-alpha.vercel.app</span>
+            <span class="mh-line">Public landing page is live. The app itself sits behind sign-up.</span>
           </div>
+          <ul class="shots">
+            <li><img src="/images/reviewnudge-1.webp" alt="Real screenshot I took from the live ReviewNudge landing page on a phone: the headline &quot;More Google reviews, with zero extra work.&quot; and the start-free button." width="620" height="1034" loading="lazy" decoding="async"></li>
+            <li><img src="/images/reviewnudge-2.webp" alt="Real screenshot I took from the live ReviewNudge landing page: the How it works section, step 1 add a customer and step 2 we send the email." width="620" height="1034" loading="lazy" decoding="async"></li>
+            <li><img src="/images/reviewnudge-3.webp" alt="Real screenshot I took from the live ReviewNudge landing page: the feature cards Fully compliant and Bot-proof click tracking." width="620" height="1034" loading="lazy" decoding="async"></li>
+          </ul>
+          <p class="mh-note">Real screenshots, taken by me on a phone. Not mock-ups.</p>
         </div>
       </li>
 
       <li class="work-item" data-reveal>
-        <div class="work-media" data-shape="phone">
+        <div class="work-media r r-620x1262" data-shape="phone" data-shine>
           <ul class="shots">
             <li><img src="/images/mental-maths-dashboard-continue.webp" alt="Real screenshot from the Mental Maths Practice app, taken from its repository: the practice dashboard with a session ready to continue, on a phone screen." width="620" height="1262" loading="lazy" decoding="async"></li>
             <li><img src="/images/mental-maths-quiz-feedback.webp" alt="Real screenshot from the Mental Maths Practice app, taken from its repository: a quiz question with feedback after an answer, on a phone screen." width="620" height="1262" loading="lazy" decoding="async"></li>
@@ -141,18 +167,22 @@
           <p class="status ok">Live on the web</p>
           <p class="work-links"><a class="lnk" href="https://my-english-practice-three.vercel.app">Open live site</a><a class="lnk" href="https://github.com/min955379-glitch/My-English-Practice">GitHub repo</a></p>
         </div>
-        <div class="work-media" data-shape="wide">
-          <div class="mock" role="img" aria-label="No screenshot: this card is a drawn label, not a picture of the site. My English Practice live site, 13 levels, listen and spell.">
-            <span class="mock-url">my-english-practice-three.vercel.app</span>
-            <span class="mock-big">My English Practice</span>
-            <span class="mock-line">Listen. Spell one letter at a time. 13 open levels.</span>
-            <span class="mock-chip">no screenshot</span>
+        <div class="work-media r r-620x1034" data-shape="phone" data-shine>
+          <div class="media-head">
+            <span class="mh-url">my-english-practice-three.vercel.app</span>
+            <span class="mh-line">Listen. Spell one letter at a time. 13 open levels.</span>
           </div>
+          <ul class="shots">
+            <li><img src="/images/english-practice-1.webp" alt="Real screenshot I took from the live My English Practice site on a phone, dark theme: the hero line A little practice. A little more confidence." width="620" height="1034" loading="lazy" decoding="async"></li>
+            <li><img src="/images/english-practice-2.webp" alt="Real screenshot I took from the live My English Practice site: the practice card with the word C A T in letter tiles and the line Small steps are still steps." width="620" height="1034" loading="lazy" decoding="async"></li>
+            <li><img src="/images/english-practice-3.webp" alt="Real screenshot I took from the live My English Practice site, light theme: the same hero with the Start practising button and the note 15 to 25 minutes a day." width="620" height="1034" loading="lazy" decoding="async"></li>
+          </ul>
+          <p class="mh-note">Real screenshots, taken by me on a phone. Both themes.</p>
         </div>
       </li>
 
       <li class="work-item" data-reveal>
-        <div class="work-media" data-shape="wide">
+        <div class="work-media r r-1200x630" data-shape="wide" data-shine>
           <img class="frame" src="/images/bluepeak-og.webp" alt="Open Graph preview image stored in the BluePeak Terminal repository: the terminal sign-in screen on a dark navy background." width="1200" height="630" loading="lazy" decoding="async">
         </div>
         <div class="work-meta">
@@ -176,7 +206,7 @@
           <p class="status">Not on Google Play yet</p>
           <p class="work-links"><a class="lnk" href="https://github.com/min955379-glitch/IDLE-BUSINESS-SIMULATOR-GAME-">GitHub repo</a></p>
         </div>
-        <div class="work-media" data-shape="phone">
+        <div class="work-media r r-620x1102" data-shape="phone" data-shine>
           <ul class="shots">
             <li><img src="/images/street-food-1.webp" alt="Real store screenshot from my Godot game Street Food Empire: the tutorial screen with the first street stall." width="620" height="1102" loading="lazy" decoding="async"></li>
             <li><img src="/images/street-food-2.webp" alt="Real store screenshot from Street Food Empire: the diner interior with counters and customers in the queue." width="620" height="1102" loading="lazy" decoding="async"></li>
@@ -186,13 +216,16 @@
       </li>
 
       <li class="work-item" data-reveal>
-        <div class="work-media" data-shape="wide">
-          <div class="mock" role="img" aria-label="No screenshot: this card is a drawn label, not a picture of the site. Blue Peak Store: women's stitched clothing, order through WhatsApp, no account needed.">
-            <span class="mock-url">blue-peak-store.vercel.app</span>
-            <span class="mock-big">Blue Peak Store</span>
-            <span class="mock-line">Catalogue, bag, sizes, checkout into WhatsApp. Owner admin portal included.</span>
-            <span class="mock-chip">no screenshot</span>
+        <div class="work-media r r-620x1034" data-shape="phone" data-shine>
+          <div class="media-head">
+            <span class="mh-url">blue-peak-store.vercel.app</span>
+            <span class="mh-line">Catalogue, bag, sizes, checkout into WhatsApp. Owner admin portal included.</span>
           </div>
+          <ul class="shots">
+            <li><img src="/images/bluepeak-store-1.webp" alt="Real screenshot I took from the live Blue Peak Store on a phone: the opening screen with the brand name, the new season edit line and the Shop the Collection button." width="620" height="1034" loading="lazy" decoding="async"></li>
+            <li><img src="/images/bluepeak-store-2.webp" alt="Real screenshot I took from the live Blue Peak Store: the stitched catalogue with the search field and the Shop, Co-ord Sets, 3PC Stitched, 2PC Stitched and Sale filter chips." width="620" height="1034" loading="lazy" decoding="async"></li>
+          </ul>
+          <p class="mh-note">Real screenshots, taken by me on a phone. No prices from the store are quoted here.</p>
         </div>
         <div class="work-meta">
           <p class="idx" aria-hidden="true">06</p>
@@ -208,6 +241,12 @@
   </div>
 </section>
 
+<section class="mq" aria-label="Stacks and tools used on the projects above">
+  <div class="mq-in" aria-hidden="true">
+    <span>Next.js 16</span><i>&middot;</i>    <span>React 19</span><i>&middot;</i>    <span>TypeScript</span><i>&middot;</i>    <span>Supabase</span><i>&middot;</i>    <span>Drizzle</span><i>&middot;</i>    <span>Resend</span><i>&middot;</i>    <span>Vite</span><i>&middot;</i>    <span>Web App Manifest</span><i>&middot;</i>    <span>Android WebView</span><i>&middot;</i>    <span>Godot 4.7</span><i>&middot;</i>    <span>GDScript</span><i>&middot;</i>    <span>APK + AAB</span><i>&middot;</i>    <span>Expo</span><i>&middot;</i>    <span>React Native</span><i>&middot;</i>    <span>Manifest V3</span><i>&middot;</i>    <span>FastAPI</span><i>&middot;</i>    <span>SQLite</span><i>&middot;</i>    <span>Google Drive</span><i>&middot;</i>
+  </div>
+</section>
+
 <section id="more" class="section section-alt" aria-labelledby="more-h">
   <div class="wrap">
     <div class="sec-head">
@@ -216,7 +255,7 @@
     </div>
     <ul class="list" data-stagger>
       <li class="list-row" data-reveal>
-        <span class="list-img"><img src="/images/fitness-pro.webp" alt="Facility photo made for the Fitness Pro project: the training floor with strength equipment." width="1000" height="563" loading="lazy" decoding="async"></span>
+        <span class="list-img r r-1000x563"><img src="/images/fitness-pro.webp" alt="Facility photo made for the Fitness Pro project: the training floor with strength equipment." width="1000" height="563" loading="lazy" decoding="async"></span>
         <span class="list-idx">07</span>
         <div class="list-body">
           <b>Fitness Pro</b> - gym site for an Abbottabad gym: membership plans, diet add-ons, daily and weekly passes, online registration and an admin login.
@@ -345,10 +384,12 @@
     <p class="label">// CONTACT</p>
     <h2 id="contact-h" class="sec-h">Tell me what you need. I answer on WhatsApp.</h2>
     <p class="sec-note">No form, no login, nothing stored. Four real links - the first one is the fastest.</p>
+    <div class="glass-light contact-card" data-shine>
     <a class="btn btn-primary btn-xl" href="https://wa.me/923485581969" rel="noopener" target="_blank">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Zm0 2a7 7 0 1 1-3.6 13l-.4-.2-2.2.6.6-2.1-.2-.4A7 7 0 0 1 12 5Zm-2.7 4.6c-.2 0-.4.1-.6.3-.3.3-.7.8-.5 1.6.3 1.1 1.2 2.4 2.6 3.4 1.7 1.2 3 1.4 3.7 1.1.4-.2.7-.7.8-1.1 0-.2 0-.4-.1-.5l-1.4-.7c-.2-.1-.4 0-.6.2l-.4.5c-.1.1-.3.1-.4 0-.6-.3-1.1-.7-1.5-1.2-.2-.2-.2-.3 0-.5l.3-.4c.1-.2.1-.3 0-.5l-.6-1.1c-.1-.2-.2-.2-.3-.2z"/></svg>
       <span>WhatsApp me: 0348 5581969</span>
     </a>
+    </div>
     <ul class="links">
       <li><a href="mailto:min955379@gmail.com"><span>Email</span><code>min955379@gmail.com</code><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
       <li><a href="https://www.fiverr.com/paid_promotions?public_mode=true" rel="noopener" target="_blank"><span>Fiverr</span><code>promotions link</code><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>

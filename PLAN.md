@@ -124,3 +124,18 @@ I CANNOT make (no image in repo, and live site not screenshot-able here): Review
 2. Your Fiverr link is `fiverr.com/paid_promotions?public_mode=true` (a promo link, not a profile URL). Use it as-is, or send your real Fiverr profile link?
 
 Reply `approved` (with any changes) and I build Stage 2.
+
+
+---
+
+## Stage 2 - premium pass (approved and built)
+
+Same content contract. New: night-desk hero panel (palette B) with aurora + grain + pointer spotlight,
+frosted glass on the nav / hero card / contact card, a one-pass sheen, floor reflection on the monogram,
+desktop-only gold dot-and-ring cursor with a View/Open/Go label, scroll progress line, two real number
+counters, magnetic WhatsApp button, one-shot letter reveal, a paused-on-hover marquee of the real stacks,
+lit borders on rows and vertical section rails at 1280. Everything is transform/opacity only, all of it
+switches off in `lite` mode (touch, reduced-motion, save-data, slow network) and behind `@supports`
+fallbacks for glass. 3D tilt was dropped on request. Nine of the owner's own screenshots now sit in one
+shared 620x1034 frame, swipeable like the Street Food Empire strip; the bag screenshot was not used because
+it shows currency amounts, and no prices are allowed on this page.
