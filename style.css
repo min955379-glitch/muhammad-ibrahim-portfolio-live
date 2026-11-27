@@ -220,10 +220,8 @@ body.menu-open .nav{transform:none;opacity:1;visibility:visible;pointer-events:a
 .list-links{display:flex;flex-wrap:wrap;gap:8px}
 .list-links .lnk{flex:1 1 auto;justify-content:center}
 .list-links .lnk{min-height:48px;font-size:.875rem}
-.list-img{display:none}
-/* the wide-row card shows its (correctly proportioned) preview on phones too */
-.list-row--full .list-img{display:block}
-.list-row--full .list-img img{width:100%;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
+.list-img{display:block}
+.list-img img{width:100%;max-width:260px}
 
 /* ---------- services ---------- */
 .svc{display:grid}

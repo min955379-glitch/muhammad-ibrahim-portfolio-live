@@ -97,7 +97,7 @@ height on an image.
 | Mental Maths x3 | `images/mental-maths-*.webp` | 620x1262 | 218 x 444 | 168 x 342 each |
 | Street Food x3 | `images/street-food-1..3.webp` | 620x1102 | 218 x 388 | 168 x 298 each |
 | BluePeak Terminal | `images/bluepeak-og.webp` | 1200x630 | 320 x 168 | 533 x 280 |
-| Blue Peak Store / Fitness Pro | `images/fitness-pro.webp` | 1000x563 | 320 x 180 | 200 x 113 |
+| Fitness Pro (row) | `images/fitness-pro.webp` | 1000x563 | 260 x 146 | 200 x 113 |
 
 Rules that make this hold:
 
@@ -108,6 +108,8 @@ Rules that make this hold:
   plus `object-fit:contain`, so the box can never be a different shape than the file.
 * One frame rule for every preview: `border:1px solid var(--line)`, `border-radius:var(--radius)`,
   `background:var(--surface)` - the same values the Street Food row uses.
+* No photo exists for ReviewNudge, My English Practice or Blue Peak Store, so those keep the drawn
+  "no screenshot" text card (dashed `--line-2` frame, same `--radius`) - never a fake screenshot.
 * Phone shots are drawn `min(252px, 100%, 34vh)`: about 250-280 px wide when there is room,
   never taller than ~70% of the screen height, three side by side at 1280, swipeable below that.
 * `alt` on every image, `loading="lazy" decoding="async"`, all WebP under 40 KB.
