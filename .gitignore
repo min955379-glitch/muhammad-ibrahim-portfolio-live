@@ -1,0 +1,9 @@
+# local verification rig - not part of the site
+.verify/
+
+# one-off edit scripts kept out of the site history
+tools_pass*.py
+
+# os / editor noise
+.DS_Store
+*.log

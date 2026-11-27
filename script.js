@@ -87,8 +87,18 @@
     if (sec) sections.push({ link: a, sec: sec });
   });
 
-  var queued = false, heroH = 0, spyOn = -2;
-  var measure = function () { heroH = heroEl ? heroEl.offsetHeight : 0; };
+  var queued = false, spyOn = -2, lightAt = [];
+  /* the bar goes light only over a light band, so it follows the page and not the scroll */
+  var isLight = function (el) {
+    if (!el) return false;
+    var m = /rgba?\(([^)]+)\)/.exec(window.getComputedStyle(el).backgroundColor);
+    if (!m) return false;
+    var p = m[1].split(","), i, v = [];
+    for (i = 0; i < 3; i++) v.push(parseFloat(p[i]));
+    if (p.length > 3 && parseFloat(p[3]) === 0) return false;
+    return (0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]) / 255 > 0.55;
+  };
+  var measure = function () { lightAt = sections.map(function (s) { return isLight(s.sec); }); };
   window.addEventListener("resize", measure);
 
   function paint() {
@@ -96,16 +106,11 @@
     var y = window.pageYOffset || html.scrollTop || 0;
     var h = Math.max(1, (html.scrollHeight || 0) - (window.innerHeight || 0));
     if (prog && h > 4) prog.style.transform = "scaleX(" + Math.min(1, y / h) + ")";
-    if (barEl && heroEl) {
-      var past = y > Math.max(0, heroH - 72);
-      if (past !== barEl.classList.contains("is-day")) barEl.classList.toggle("is-day", past);
-    }
+    var line = (barEl ? barEl.offsetHeight : 0) + 26, now = null, i;
     if (sections.length) {
-      var line = (barEl ? barEl.offsetHeight : 0) + 26, now = null, i;
       if (y < 24) now = -1;                        /* near the top: nothing is "current" */
       else {
         for (i = 0; i < sections.length; i++) if (sections[i].sec.getBoundingClientRect().top <= line) now = i;
-        if (y + (window.innerHeight || 0) >= (html.scrollHeight || 0) - 4) now = sections.length - 1;
         /* the last band is short: at the foot of the page it is the one you are looking at */
         if (y + (window.innerHeight || 0) >= (html.scrollHeight || 0) - 4) now = sections.length - 1;
       }
@@ -113,6 +118,10 @@
         spyOn = now;
         for (i = 0; i < sections.length; i++) sections[i].link.classList.toggle("is-now", i === now);
       }
+    }
+    if (barEl) {
+      var day = now !== null && now >= 0 && !!lightAt[now];
+      if (day !== barEl.classList.contains("is-day")) barEl.classList.toggle("is-day", day);
     }
   }
   function onScroll() { if (!queued) { queued = true; rAF(paint); } }
