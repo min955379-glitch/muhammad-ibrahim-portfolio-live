@@ -132,7 +132,7 @@ Files: `style.css` (premium block at the end), `script.js` (premium block at the
 | Frosted glass | nav bar, hero card, contact card | 3 surfaces | `@supports not (backdrop-filter)` -> solid fill |
 | Sheen, one 600 ms pass | `[data-shine]` x8 | on reveal, and on hover (desktop) | lite / reduced motion |
 | Floor reflection | `.mark-refl` | always (CSS mask) | stays |
-| Gold dot + ring + label | `.cur-dot`, `.cur-ring` | only `(hover:hover) and (pointer:fine)` | touch, lite, reduced motion; **native cursor is never hidden** |
+| Gold dot + ring + label (the ring grows with `scale`, never with width/height) | `.cur-dot`, `.cur-ring` | only `(hover:hover) and (pointer:fine)` | touch, lite, reduced motion; **native cursor is never hidden** |
 | Pointer spotlight in hero | `.hero-spot` | desktop, while the pointer is in the hero | same |
 | Scroll progress line | `#progress` | `scaleX` in one rAF | lite / reduced motion |
 | Number counters | `[data-count]` (3 nodes) | rAF, 700 ms, one shot | lite; final value is the HTML text |

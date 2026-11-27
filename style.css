@@ -480,18 +480,21 @@ body.menu-open .nav{transform:none;opacity:1;visibility:visible;pointer-events:a
 
 /* 6. real mouse cursor: gold dot + ring with a label (desktop only, native cursor stays) */
 @media (hover:hover) and (pointer:fine){
-  .cur-dot,.cur-ring{position:fixed;top:0;left:0;z-index:70;pointer-events:none;border-radius:50%;
-    display:grid;place-items:center;opacity:0}
+  .cur-dot,.cur-ring{position:fixed;top:0;left:0;z-index:70;pointer-events:none;opacity:0}
   body.cur-on .cur-dot,body.cur-on .cur-ring{opacity:1}
-  .cur-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--n-gold)}
-  .cur-ring{width:30px;height:30px;margin:-15px 0 0 -15px;border:1px solid rgba(214,164,92,.5);
-    transition:width 180ms var(--ease-out),height 180ms var(--ease-out),background-color 180ms var(--ease-out),
-      border-color 180ms var(--ease-out),margin 180ms var(--ease-out)}
-  .cur-ring span{font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.08em;
+  .cur-dot{width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--n-gold)}
+  /* the ring box only translates; the growth is a scale on an inner element,
+     so nothing here animates width/height/margin */
+  .cur-ring{width:0;height:0}
+  .cur-ring i{position:absolute;left:-15px;top:-15px;width:30px;height:30px;border-radius:50%;
+    display:block;border:1px solid rgba(214,164,92,.5);
+    transition:transform 180ms var(--ease-out),background-color 180ms var(--ease-out),border-color 180ms var(--ease-out)}
+  .cur-ring span{position:absolute;left:-28px;top:-7px;width:56px;text-align:center;
+    font-family:var(--font-mono);font-size:8px;font-weight:600;letter-spacing:.08em;
     color:var(--night);opacity:0;transition:opacity 140ms linear}
-  body.cur-link .cur-ring{width:56px;height:56px;margin:-28px 0 0 -28px;background-color:rgba(214,164,92,.92);border-color:transparent}
+  body.cur-link .cur-ring i{transform:scale(1.85);background-color:rgba(214,164,92,.92);border-color:transparent}
   body.cur-link .cur-ring span{opacity:1}
-  body.cur-img .cur-ring{width:64px;height:64px;margin:-32px 0 0 -32px;background-color:rgba(102,184,232,.24);border-color:rgba(102,184,232,.6)}
+  body.cur-img .cur-ring i{transform:scale(2.1);background-color:rgba(102,184,232,.24);border-color:rgba(102,184,232,.6)}
 }
 
 /* 7. tech marquee (pause on hover, static on touch / lite) */

@@ -227,6 +227,8 @@
     var lbl = doc.createElement("span");
     dot.className = "cur-dot"; dot.setAttribute("aria-hidden", "true");
     ring.className = "cur-ring"; ring.setAttribute("aria-hidden", "true");
+    var ringVis = doc.createElement("i");
+    ring.appendChild(ringVis);
     ring.appendChild(lbl);
     doc.body.appendChild(dot); doc.body.appendChild(ring);
 
