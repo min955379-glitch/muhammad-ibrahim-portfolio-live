@@ -20,3 +20,5 @@ A one-page personal portfolio: static HTML + CSS + vanilla JS. No framework, no 
 ## Contact
 
 WhatsApp only as a button: `https://wa.me/923485581969` - plus email, Fiverr and GitHub links.
+
+Deployed on Vercel: static files at the repository root, no build step.
