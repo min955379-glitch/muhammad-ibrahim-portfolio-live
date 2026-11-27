@@ -17,6 +17,8 @@ production alias `https://muhammad-ibrahim-portfolio-live.vercel.app/`.
 | External links | 22 links, 19 unique targets, all real (wa.me / mailto / vercel.app / github.com / fiverr); none empty; `target=_blank` all carry `rel=noopener` | `cheerio` |
 | Images | 6 `<img>`, all 21-40 KB, all WebP, all have width+height, alt text, `loading=lazy` | `cheerio` + `identify` |
 | No fake screenshot | 3 sites with no image use a labelled text card that literally says `no screenshot` | manual + `cheerio` |
+| Proof-strip fact | "6 of 10 shown projects run on a public URL" - counted on the page, no date, no expiry |
+| Tech tags re-checked against each repo | `package.json` / repo tree read for all 10 repos (see below) |
 | No prices, no reviews, no invented claims | zero matches for `PKR/Rs/$/per month`, `testimonial`, `award`, `years of experience` | regex over body text |
 | No emoji | zero emoji codepoints | regex over markup |
 | Contrast (WCAG) | ink/ivory 15.4:1, muted 7.9:1, link 9.0:1, gold button label 7.7:1, footer 12.4:1, worst used pair 5.2:1 | own WCAG formula script (`/tmp/contrast.js`) |
@@ -48,6 +50,28 @@ production alias `https://muhammad-ibrahim-portfolio-live.vercel.app/`.
 - **Deployment Protection: not changed by me.** The connector exposes no setting for it and
   `api.vercel.com` is blocked from the sandbox. I did verify the public page loads without a login today,
   so nothing needs changing unless Vercel later starts asking for one.
+
+## Tech-tag corrections (repo evidence, this pass)
+
+| Project | Was | Now (repo evidence) |
+|---|---|---|
+| Blue Peak Store | Next.js, Supabase | Static HTML + CSS + vanilla JS, Supabase Postgres, no build step (repo has only `index.html`, `admin.html`, `supabase/*.sql`) |
+| Mental Maths | TypeScript, PWA, Android/WebView | Vanilla JS + Web App Manifest (`pwa/`), React 18 + Vite prototype (`frontend/`), Android WebView |
+| Fitness Pro | Next.js, Tailwind | Next.js 16, TypeScript, React, Supabase Auth (no Tailwind in `package.json`) |
+| ReviewNudge | ...Resend, Vercel | ...Resend (Vercel is hosting, not a dependency) |
+| My English Practice | ...Web Speech | ...Supabase + Drizzle (`@supabase/supabase-js`, `drizzle-orm`; Tailwind 4 present) |
+| BluePeak Terminal | Vanilla JS, Node gateway, Supabase, RLS | Static HTML + CSS + vanilla JS, Node gateway, Supabase Auth + RLS |
+| Street Food Empire | Godot 4 | Godot 4.7 (`project.godot` header) |
+| Chat Bridge, DailyMB, DaemonCut | unchanged | already matched the repos |
+
+Backtests claim: kept, because the repo really has it - `PROJECT_STATUS.md` describes a
+"fee/slippage-aware deterministic backtesting" stage and a "Historical Backtester" (up to 1,000 candles).
+The card now reads "a historical backtester that accounts for fees and slippage" instead of "backtests".
+
+Claims softened this pass (removed as unprovable): "tested and fixed by me line by line",
+"tested on real phones", "checked frame by frame", "I check them at 360 px width", "Same-day reply is usual",
+and the perishable "I opened it today / links I checked today" wording (verified true on 2026-11-27, but it
+rots, so it is gone from the page).
 
 ## Things you should confirm by eye
 
