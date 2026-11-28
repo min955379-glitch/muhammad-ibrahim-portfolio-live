@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MI">
-<rect width="64" height="64" rx="14" fill="#1B2C4B"/>
-<text x="32" y="43" text-anchor="middle" font-family="Georgia,serif" font-size="27" font-weight="600" fill="#D9A441" letter-spacing="1">MI</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><defs>
+<linearGradient id="f" x1="20" y1="4" x2="80" y2="96" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#2C4470"/><stop offset=".56" stop-color="#1B2C4B"/><stop offset="1" stop-color="#0D1728"/></linearGradient>
+<linearGradient id="e" x1="50" y1="2" x2="50" y2="98" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#F3EDE1" stop-opacity=".34"/><stop offset=".5" stop-color="#F3EDE1" stop-opacity=".07"/><stop offset="1" stop-color="#F3EDE1" stop-opacity=".16"/></linearGradient>
+</defs>
+<rect width="100" height="100" rx="22" fill="#101A2E"/>
+<rect x="6" y="6" width="88" height="88" rx="21" fill="url(#f)"/>
+<rect x="6.8" y="6.8" width="86.4" height="86.4" rx="20.2" fill="none" stroke="url(#e)" stroke-width="1.6"/>
+<g fill="none" stroke="#F3EDE1" stroke-width="10" stroke-linejoin="miter">
+<path d="M28.5 68.5V31.5L41 57.5l12.5-26v37"/><path d="M71.5 31.5v37"/>
+</g></svg>
