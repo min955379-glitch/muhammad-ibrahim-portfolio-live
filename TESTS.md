@@ -1,6 +1,6 @@
 # What was tested and what was not
 
-Date: 2026-11-27/28. Branch `arena/60aae8ed-muhammad-ibrahim-portfolio-liv` (rounds 3 and 4, not deployed).
+Date: 2026-11-27/28. Branch `arena/60aae8ed-muhammad-ibrahim-portfolio-liv` (rounds 3, 4 and 5, not deployed).
 Production still runs `main` = `4d6c8404` at
 `https://muhammad-ibrahim-portfolio-live.vercel.app/`.
 Everything below was measured in this sandbox against the files in this repo.
@@ -8,6 +8,39 @@ The rig lives in `.verify/` (gitignored): a static server, a real headless Chrom
 (`puppeteer-core` + `@sparticuz/chromium`), and the checkers `check.js`, `dom-test.js`,
 `premium-test.js`, `contrast.js`, `verify.js`, `rm.js`, plus `extra.js` / `seams.js` for the
 section PNGs that were looked at by hand.
+
+## ROUND 5 — the monogram, the icons, the frames
+
+Nine fixes, nothing else touched: the MI mark redrawn, words replaced by brand icons, a real
+burger, device frames chosen by project type, four equal cards in *More work*, one media system
+for Fitness Pro / Chat Bridge / DailyMB, five services instead of six, a back-to-top that
+scrolls instead of changing the URL, and equal heights where the boxes were drifting apart.
+Ivory and night, the type scale, the hero, the scroll reveal, the prefilled WhatsApp messages,
+the wording and the absence of prices are all as they were.
+
+| Fix | What it became, and how it was measured |
+|---|---|
+| MI monogram | One `<symbol id="mi-tile">` used by the bar (24 px), the hero card (48 px), the footer line (24 px) and `assets/favicon.svg` (993 B). Rounded square, a soft vertical gradient, one inner highlight, one drop shadow — the mirrored reflection under the hero mark is gone with its CSS. Rendered at 24, 48 and 120 px on ivory and on night, and the favicon at 16, 32 and 64, in one PNG, and looked at: `.verify/shots/mi-sizes.png` |
+| Icons instead of words | WhatsApp, GitHub and Fiverr are the official paths from Simple Icons 16.38.1 (CC0), inlined as four `<symbol>`s; the email mark is a drawn line envelope. No official green anywhere — the marks inherit ivory or gold. 14 icon buttons: bar 48 px, hero 56 (WhatsApp, gold) + 52, contact 64 ×4, footer 48. Measured: **0 under 48 px, 0 carrying words, 14 with `aria-label` and 14 with a `title`**, focus ring on the bar's WhatsApp button = `2px solid rgb(214, 164, 92)`. Every link is still a real link and every WhatsApp link still opens a prefilled English message |
+| The bar | The text pill is gone; the two icon buttons sit at the end of `.bar-in` (not inside `nav`, so they do not inherit the link styling). Measured 838 px of content in the row, so one row only starts at **920**, and the burger + sheet cover everything below it. Bar height 65 px at 1280/920/768 and 61 px at 360/600/700 — at 768 it used to wrap to 105 px |
+| Burger | Three 20×2 px lines that fold into an X while the sheet is open (measured `matrix(.707,.707,-.707,.707,0,6)` / `matrix(.4,0,0,1,0,0)` / the mirror of the first), `aria-expanded` true ⇄ false, label "Open menu" ⇄ "Close menu", sheet 323 px with the same 6 links at ≥ 48 px, Esc and an outside click close it, focus goes back to the button, `matchMedia` in the JS listens on the same 920 |
+| Device frames | Phone frames (8 px bezel, camera pill, two side buttons, one light edge, `cover` + top) for Mental Maths Practice and Street Food Empire; browser windows (three dots in ivory/gold/navy, a rounded pill with the deployed domain) for ReviewNudge, My English Practice and Blue Peak Store — their captures are portrait, so the windows are narrow "responsive view" ones. 26 slots: 9 phone, 13 browser, 3 extension, 1 wide panel. Measured: the two sides identical at 360/600/700/1280, the middle exactly 8 % larger on both axes (a `scale(1.08)` on its bottom edge, so its base and its shape stay with its neighbours), no tilt anywhere |
+| Four equal cards | `align-items:stretch` + `grid-auto-rows:1fr`, the media box a fixed `16/10` at the top, the description clamped to 3 lines, the buttons `margin-top:auto`. Heights 669.9 / 669.9 / 669.9 / 669.9 px at 1280 (media 546×341), 733.6 ×4 at 768 (662×414), 563.1 ×4 at 360 (302×227), and no leftover gap under the button row. The Fitness Pro caption that mentioned prices is gone |
+| One media system for the three | Fitness Pro: three `1.25` browser windows, `cover`, cropped from the left so a headline is never cut mid-word. Chat Bridge: a drawn toolbar strip with the extension icon, the three real popups hanging under it, `contain`, equal slots. DailyMB: the one screenshot that shows the app in the middle, and two coded SVG drawings of real README features (the five answers in Short mode, the 30-day history) in the same phone frame and the same box — each labelled "Illustration, not a screenshot", `role="img"` with the drawing described. DaemonCut keeps its "Concept artwork" label. Every frame in every row: same size, `cover` + `object-position:top`, one label under it on a shared line |
+| Five services | The "AI-assisted building" row deleted, the remaining five renumbered 01–05, each with its own prefilled message (5 unique of 5 measured). Heading "Five jobs people actually ask for", the hero counter reads 5, `check.js` and this file follow it |
+| Back to top | "Back to top" with an up arrow that bobs: `animation:bob 1.6s ease-in-out infinite`, transform-only keyframes, stopped by both `html.lite` and `prefers-reduced-motion`. Click: 5200 → 0 px with the URL still `…/index.html` (no `#top`); a reload at 3990 px stayed at 3990 px with `hash:""`; `history.scrollRestoration` is never mentioned in the JS, asserted |
+| Equal height | How-I-work steps 166 / 166 / 166 / 166 at 1280 (174 ×4 at 360), About facts 82.6 ×6 (68.6 ×6 at 360), contact icon buttons 64 ×4 (the Fiverr wordmark is 31 px against the line icons' 28 so the four read the same size), the four tiles and all ten stage rows as above |
+
+| Harness work | Result |
+|---|---|
+| `check.js` | 67 → **107 assertions, 0 fail**. Added: the media system counted from the file (26 slots / 24 preview links / 9 phone + 13 browser + 3 extension + 1 panel / 5 middle slots / 8 three-up rows), "first shot centred" for the trios that have a middle, icon-button label + title + no-words + 48 px box + focus ring, the burger's classes and its 920 threshold, the X transform, five services numbered with five unique prefills, the four tiles' stretch + `margin-top:auto`, back-to-top (label, 1.6 s, transform-only, lite and reduced-motion both stop it, `preventDefault` + `scrollTo`, no `scrollRestoration`), drawings labelled, the old frame classes absent, no tilt, no prices anywhere, tag balance kept |
+| `premium-test.js` | 24 → **28 checks, 0 fail**. The image test was rewritten for the new system (a screenshot must *cover* its frame and be top- or left-anchored; an uncropped one must keep its own ratio; nothing may spill) and a new test compares the label lines inside every row. The clipped-text test now only looks at boxes that actually clip, and the brand tile is asserted as a 48 px target on a small phone |
+| `verify.js` | selectors moved to `.dev` / `.slot` / the label as a sibling: `h-scroll=0`, `small taps: []`, `narrow cols: []`, every stage `minPad≥1`, `cap:ok` on all ten labelled rows, lightbox `{open:true, imgW:420, focus:"lb-box"}`, hover spread live at 40/40 px, all at 360/768/1280 |
+| `polish.js` (new) | the round-5 rig: the monogram page, then per width the bar, every icon button's box/icon/label/title, the ten stage rows with each frame's size, ratio, `object-fit`, `object-position`, URL text and label line, the four tiles, the how/steps/facts/services heights, the illustrations, back-to-top, the sheet open and closed, scroll position through a click and a reload, the lightbox, the focus ring — and a PNG per block |
+| `shots2.js` / `probe-bar.js` / `probe-cap.js` / `probe-slot.js` (new) | the widths in between (600, 700, 920…) where the row and the sheet change hands, and the measurements behind the two breakpoint fixes |
+| Re-run in full | `check.js` 0/107 · `dom-test.js` 0/32 · `premium-test.js` 0/28 · `verify.js` clean at 360/768/1280 · `contrast.js` 536 still runs + 146 hover runs, **0 under par, worst 5.11:1** · `rm.js` reduced-motion / lite / full at 360 and 1280 all clean · `node --check script.js` clean |
+| Weights | `index.html` 58 036 B, `style.css` 43 667 B (< 60 KB), `script.js` 14 085 B (< 25 KB), 24 WebP 453 812 B, 3 WOFF2 69 032 B → ≈ **623.7 KB** (< 750 KB). `images/dailymb-1.webp` and `dailymb-3.webp` were deleted (the green-accented screen and the settings screen); no file in `images/` is unused |
+| PNGs looked at | the monogram sheet, the bar at 360/768/1280, the hero at 360/1280, the sheet open at 360, all six Selected-work stages at 1280 and the first two at 360, all four More-work tiles at 1280 and three of them at 360, the services at 1280, contact and footer at 360/1280, the tiles at 768 |
 
 ## ROUND 4 — colour revert + the Honest note removed
 
@@ -67,10 +100,19 @@ ivory band is invisible to a background-colour guess).
   label should change or the link should be dropped. Not verified either way.
 - `check.js` counts `<img>`s that carry `width`/`height`; the lightbox `img` is sized by hand
   in the CSS because its source is set by JS.
-- `contrast.js` does not score text inside `aria-hidden="true"` decoration: the mirrored "MI"
-  reflection under the hero monogram (1.89:1 by design — it is a reflection, not a message) and
-  the marquee's echo row of gold separators. Both are hidden from a screen reader and both were
-  left as they were on `main`. Every run a visitor is asked to read is scored.
+- `contrast.js` does not score text inside `aria-hidden="true"` decoration: the marquee's echo
+  row of gold separators, and the drawn shapes inside the two DailyMB illustrations. Both are
+  hidden from a screen reader. Every run a visitor is asked to read is scored.
+- The two DailyMB slots beside the real screenshot are drawings of features the README describes
+  (the Short-mode answer list, the 30-day history grid), not captures of the app. Each is
+  labelled "Illustration, not a screenshot" and carries a `role="img"` description; the stage
+  note says which of the three is real. The old `dailymb-1.webp` (green accents) and
+  `dailymb-3.webp` (a settings screen) were deleted rather than kept to fill the row.
+- The top bar shows its links in one row from 920 px up and folds them into the sheet below that.
+  920 is measured (the row needs 838 px), not a device width; at 768 and 820 the bar therefore
+  carries the burger, which is what keeps it one line tall there.
+- The brand mark in the bar is a 24 px tile inside a 48 px target on a phone (`check.js` asserts
+  both), because below 480 the name next to it is hidden.
 
 ## NOT TESTED (cannot be done from this sandbox)
 
@@ -78,5 +120,7 @@ ivory band is invisible to a background-colour guess).
 - No Lighthouse score and no frame-rate trace: not available here. Motion was verified by
   checking that only `transform`/`opacity` animate and by reading the computed styles.
 - Public response headers (cache-control, content-type) cannot be read over HTTPS from here.
-- This branch has not been deployed; nothing here was checked against a live Vercel URL yet.
+- Every number above was measured against these files served from this sandbox. The branch does get a
+  Vercel preview build (see the PR), but that URL sits behind a Vercel sign-in here, so the
+  deployed copy was not re-measured.
 - The five linked live apps were checked by reading their repos and URLs, not by signing in.

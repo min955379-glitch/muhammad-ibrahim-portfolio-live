@@ -1,12 +1,10 @@
 /* Muhammad Ibrahim - portfolio. Hand-written CSS, no framework, no build step.
    Palette A "warm paper" for the page, palette B "night desk" for the hero,
    the contact band, the footer and the screenshot stages. Mobile first: 360 -> 768 -> 1280. */
-
 /* ---------- fonts ---------- */
 @font-face{font-family:"Fraunces";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/fraunces-latin-600-normal.woff2") format("woff2")}
 @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2")}
 @font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:600;font-display:swap;src:url("/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2")}
-
 /* ---------- tokens ---------- */
 :root{
   --bg:#F6F1E7;            /* ivory band */
@@ -23,7 +21,6 @@
   --font-mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
 }
 .mono{font-family:var(--font-mono);font-kerning:normal}
-
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -40,7 +37,6 @@ b,strong{font-weight:600}
 .wrap{width:100%;max-width:1140px;margin-inline:auto;padding-inline:var(--pad)}
 .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:0 0 10px 0;z-index:60}
 .skip:focus{left:0}
-
 /* ---------- sections: full-width bands, each one on its own ground ---------- */
 /* every colour a band needs is a token, so flipping a band's ground flips its type with it */
 .band{background:var(--bg);padding:78px 0;border-top:1px solid var(--line);scroll-margin-top:calc(var(--bar-h) + 10px)}
@@ -58,7 +54,6 @@ b,strong{font-weight:600}
 .sintro{margin-top:14px;color:var(--ink-2);font-size:1.0625rem;line-height:1.65;max-width:52ch}
 .band-night .num,.band-night .sintro{color:rgba(243,237,225,.78)}
 .band-night .num{color:var(--n-gold)}
-
 /* ---------- top bar: name + section links + scroll-spy ---------- */
 .progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:45;pointer-events:none;
   background:linear-gradient(90deg,var(--n-gold),var(--sky));transform:scaleX(0);transform-origin:0 50%}
@@ -69,23 +64,30 @@ b,strong{font-weight:600}
 @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){.bar{background:rgba(11,18,32,.96)}}
 .bar-in{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:var(--bar-h)}
 .brand{display:flex;align-items:center;gap:10px;min-height:48px;color:var(--n-ivory);text-decoration:none}
-.mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;flex:0 0 auto;
-  background:linear-gradient(168deg,#FFFDF8 0%,#F3EDE1 42%,#D8CFBD 100%);
-  color:var(--night);font-size:12px;letter-spacing:.06em;
-  border-top:1px solid rgba(255,255,255,.9);border-left:1px solid rgba(255,255,255,.5);
-  box-shadow:0 1px 0 #9C917C,0 2px 0 #7E745F,0 3px 0 #665D4C,0 6px 14px -4px rgba(0,0,0,.5),
-    inset 0 -6px 8px -6px rgba(16,26,46,.45)}
+.mi-defs{position:absolute;width:0;height:0;overflow:hidden}
+/* one tile at three sizes: navy face, one inner highlight, one soft shadow. no reflection. */
+.mi{display:block;flex:0 0 auto;width:24px;height:24px;border-radius:6px;
+  filter:drop-shadow(0 2px 5px rgba(16,26,46,.38))}
+.mi-lg{width:48px;height:48px;border-radius:12px}
+.bar.is-day .mi{filter:drop-shadow(0 2px 5px rgba(16,26,46,.2))}
 .brand-name{font-weight:600;letter-spacing:-.01em;font-size:.9375rem}
 .brand-role{display:none}
 .nav{display:flex;align-items:center;gap:2px}
 .nav-list{display:flex;align-items:center;gap:2px}
-.menu-btn{display:none;align-items:center;justify-content:center;min-height:48px;min-width:74px;padding:0 14px;
-  border-radius:9px;border:1px solid rgba(243,237,225,.26);background:rgba(243,237,225,.08);color:var(--n-ivory);
-  font-family:var(--font-mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
-  transition:background 140ms linear,border-color 140ms linear}
-.menu-close{display:none}
-body.menu-open .menu-open{display:none}
-body.menu-open .menu-close{display:inline}
+.menu-btn{display:none;align-items:center;justify-content:center;width:48px;height:48px;padding:0;
+  border-radius:12px;border:1px solid rgba(243,237,225,.26);background:rgba(243,237,225,.08);color:var(--n-ivory);
+  cursor:pointer;transition:background-color 140ms linear,border-color 140ms linear}
+.menu-btn:hover{background:rgba(243,237,225,.16)}
+/* three lines into an X: the same three, only transformed */
+.burger{position:relative;display:block;width:20px;height:14px}
+.burger i{position:absolute;left:0;right:0;display:block;height:2px;border-radius:2px;background:currentColor;
+  transition:transform 240ms var(--ease-out),opacity 120ms linear}
+.burger i:nth-child(1){top:0}
+.burger i:nth-child(2){top:6px}
+.burger i:nth-child(3){top:12px}
+body.menu-open .burger i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.menu-open .burger i:nth-child(2){opacity:0;transform:scaleX(.4)}
+body.menu-open .burger i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 .no-scroll{overflow:hidden}
 .nav a{display:none;align-items:center;min-height:48px;padding:0 11px;border-radius:9px;position:relative;
   font-size:.875rem;font-weight:600;color:rgba(243,237,225,.78);text-decoration:none;
@@ -94,20 +96,47 @@ body.menu-open .menu-close{display:inline}
   background:var(--n-gold);transform:scaleX(0);transform-origin:0 50%;transition:transform 200ms var(--ease-out)}
 .nav a:hover,.nav a.is-now{color:var(--n-ivory)}
 .nav a.is-now::after,.nav a:hover::after{transform:scaleX(1)}
-.nav a.nav-wa{display:inline-flex;margin-left:6px;min-height:48px;padding:0 14px;border-radius:999px;
-  background:var(--n-gold);color:var(--night);font-size:.8125rem;letter-spacing:.02em;transition:background 140ms linear,transform 140ms var(--ease-out)}
-.nav a.nav-wa::after{display:none}
-.nav a.nav-wa:hover{background:#E4B355;transform:translateY(-1px)}
+/* icon buttons: no words on them, so each one carries a label, a tooltip and 48 px of thumb */
+.ib-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ib{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:48px;height:48px;border-radius:50%;border:1px solid rgba(243,237,225,.26);
+  background:rgba(243,237,225,.08);color:var(--n-ivory);cursor:pointer;
+  transition:background-color 160ms linear,color 160ms linear,border-color 160ms linear,transform 160ms var(--ease-out)}
+.ib svg{width:20px;height:20px;fill:currentColor}
+.ib .ic-fi{width:24px;height:24px}
+.ib:hover{background:var(--n-gold);border-color:transparent;color:var(--night);transform:translateY(-1px)}
+.ib:focus-visible{outline:2px solid var(--n-gold);outline-offset:3px}
+.ib-main{width:56px;height:56px;background:var(--n-gold);border-color:transparent;color:var(--night)}
+.ib-main svg{width:26px;height:26px}
+.ib-main .ic-fi{width:24px;height:24px}
+.ib-main:hover{background:#E4B355}
+.ib-lg{width:52px;height:52px}
+.ib-lg svg{width:22px;height:22px}
+.ib-xl{width:64px;height:64px}
+.ib-xl svg{width:28px;height:28px}
+.ib-xl .ic-fi{width:31px;height:31px}
+/* the four buttons under "Contact" are the same box; only the fill differs */
+.ib-row-lg{gap:14px}
+.ib-row-lg .ib-main{width:64px;height:64px}
+.ib-row-lg .ib-main svg{width:28px;height:28px}
+.ib-bar{margin-left:2px}
+.ib-bar .ib{width:48px;height:48px;border-radius:14px;background:rgba(243,237,225,.1)}
+.ib-bar .ib svg{width:19px;height:19px}
+.ib-bar .ib .ic-fi{width:24px;height:24px}
+.ib-ft{background:transparent;border-color:rgba(243,237,225,.22)}
+.ib-ft:hover{background:var(--n-gold);color:var(--night)}
 .bar.is-day{background:rgba(246,241,231,.86);border-bottom-color:var(--line);color:var(--ink)}
 .bar.is-day .brand,.bar.is-day .nav a{color:var(--ink-2)}
+.bar-in > .ib-bar a.ib{background:rgba(243,237,225,.1);color:var(--n-ivory)}
+.bar.is-day .bar-in > .ib-bar a.ib{background:var(--surface);border-color:var(--line-2);color:var(--ink)}
+.bar.is-day .bar-in > .ib-bar a.ib:hover,.bar.is-day a.ib-main:hover{background:var(--n-gold);border-color:transparent;color:var(--night)}
+.bar.is-day a.ib-main{background:var(--accent);border-color:transparent;color:var(--accent-ink)}
 /* the WhatsApp pill stands on gold, not on the bar's ground: its ink stays solid both ways */
 .bar.is-day .nav a.nav-wa,.bar.is-day .nav a.nav-wa:hover{color:var(--night)}
 .bar.is-day .brand-name{color:var(--ink)}
-.bar.is-day .mark{background:var(--deep);color:var(--bg)}
 .bar.is-day .nav a:hover,.bar.is-day .nav a.is-now{color:var(--ink)}
 .bar.is-day .menu-btn{background:var(--surface);border-color:var(--line-2);color:var(--ink)}
-@media (max-width:479px){.brand-name{display:none}}
-
+@media (max-width:479px){.brand-name{display:none}.brand{width:48px;justify-content:center;gap:0}}
 /* ---------- buttons ---------- */
 .btn{--btn-bg:var(--surface);--btn-fg:var(--ink);--btn-bd:var(--line-2);
   display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:48px;padding:0 18px;
@@ -128,14 +157,12 @@ body.menu-open .menu-close{display:inline}
 .btn-text{--btn-bg:transparent;--btn-bd:transparent;color:var(--ink);gap:7px}
 .btn-text:hover{text-decoration:underline;text-decoration-color:var(--line-2)}
 @media (max-width:519px){
-  .hero-cta{flex-direction:column;align-items:stretch}
-  .hero-cta .btn{width:100%;min-height:52px}
-  .hero-cta .btn-text{justify-content:center}
-  .contact-cta .btn-xl{width:100%}
+  .hero-cta{flex-direction:column;align-items:flex-start}
+  .hero-cta .btn{min-height:52px}
+  .hero-cta .btn-text{justify-content:flex-start}
   .work-links{flex-direction:column;align-items:stretch}
   .work-links .btn{justify-content:center}
 }
-
 /* ---------- hero ---------- */
 .hero{position:relative;isolation:isolate;overflow:hidden;padding:calc(var(--bar-h) + 52px) 0 40px}
 .hero>*{position:relative;z-index:1}
@@ -165,25 +192,17 @@ body.menu-open .menu-close{display:inline}
 .hero .btn-text{color:var(--n-ivory)}
 .hero .btn-primary{box-shadow:0 12px 28px -14px rgba(214,164,92,.55)}
 @media (max-width:519px){.hero .btn-text{justify-content:center}}
-
 /* glass, used in two places only: the hero card and nothing else */
 .glass{position:relative;background:rgba(19,30,51,.55);border:1px solid rgba(243,237,225,.14);border-radius:18px;
   box-shadow:0 18px 44px -24px rgba(0,0,0,.72),inset 0 1px 0 rgba(243,237,225,.1);
   -webkit-backdrop-filter:blur(12px) saturate(130%);backdrop-filter:blur(12px) saturate(130%)}
 @supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){.glass{background:var(--night-2)}}
 .hero-card{padding:20px;display:grid;gap:12px;align-content:start}
-.mark-stack{display:flex;align-items:flex-start;gap:0}
-.mark-lg{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:15px;letter-spacing:.04em;
-  background:var(--n-gold);color:var(--night)}
-.mark-refl{width:44px;height:22px;display:grid;place-items:start;font-size:15px;letter-spacing:.04em;line-height:44px;
-  overflow:hidden;color:var(--n-gold);transform:scaleY(-1) translateY(11px);opacity:.32;
-  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 92%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.9),transparent 92%)}
 .hc-t{font-family:var(--font-display);font-weight:600;font-size:1.0625rem;color:var(--n-ivory);margin-top:2px}
 .build-list{display:grid;gap:0}
 .build-list li{font-size:.9375rem;line-height:1.5;color:rgba(243,237,225,.84);padding:9px 0;
   border-top:1px solid rgba(243,237,225,.12);display:flex;gap:9px}
 .build-list li::before{content:"";width:5px;height:5px;margin-top:8px;flex:0 0 auto;border-radius:50%;background:var(--sky)}
-
 /* proof strip inside the hero band */
 .proof{display:grid;gap:0;margin-top:38px;border-top:1px solid rgba(243,237,225,.16)}
 .proof li{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:14px 0;
@@ -191,11 +210,13 @@ body.menu-open .menu-close{display:inline}
 .proof b{font-family:var(--font-display);font-weight:600;font-size:clamp(1.75rem,4.4vw,2.75rem);line-height:1;
   letter-spacing:-.03em;color:var(--n-ivory);font-variant-numeric:tabular-nums;white-space:nowrap}
 .proof .mono{font-size:.625rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(243,237,225,.62)}
-
-/* ---------- the stage: one dark ground for every preview ---------- */
-.stage{position:relative;width:100%;display:flex;flex-direction:column;justify-content:center;
-  align-items:stretch;overflow:hidden;min-height:210px;
-  padding:22px 20px 16px;border-radius:24px;border:1px solid rgba(16,26,46,.16);
+/* ---------- one media system: one mat, one box, four honest frames ----------
+   every stage is the same box. inside it a preview is a phone, a browser window,
+   an extension popup hanging under a toolbar strip, or a flat panel.
+   nothing is stretched: a shot fills its screen with cover, pinned to the top. */
+.stage{position:relative;width:100%;aspect-ratio:16/10;display:flex;flex-direction:column;
+  align-items:stretch;overflow:hidden;min-height:190px;
+  padding:16px 16px 12px;border-radius:24px;border:1px solid rgba(16,26,46,.16);
   background:linear-gradient(160deg,#0B1220,#131E33 62%,#0B1220);color:var(--n-ivory)}
 .stage::before,.stage::after{content:"";position:absolute;inset:0;pointer-events:none}
 .stage::before{background:
@@ -208,95 +229,104 @@ body.menu-open .menu-close{display:inline}
 .stage[data-glow=indigo]::before{background:
    radial-gradient(40% 54% at 50% 12%,rgba(59,75,168,.42),transparent 70%),
    radial-gradient(28% 40% at 12% 84%,rgba(102,184,232,.16),transparent 70%)}
-/* three columns, always exactly as wide as the stage: the middle phone leads,
-   the two behind it sit back and a touch lower */
-.stage-in{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  align-items:center;justify-items:center;min-width:0;width:100%;height:auto;padding:16px 0 26px}
+/* three columns, exactly as wide as the stage. the two on the sides carry one rule,
+   so they come out identical; the middle one gets the same rule 8% larger. */
+.row{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;align-items:stretch;justify-items:stretch;width:100%;flex:1 1 auto;min-height:0}
+.slot{display:grid;grid-template-rows:minmax(0,1fr) auto;height:100%;min-height:0;min-width:0;justify-items:center}
+.slot .cap{justify-self:stretch}
+.stage-one .row,.stage-flat .row{grid-template-columns:minmax(0,1fr)}
 /* the stage is dark on both grounds, so its focus ring is too */
 .stage :focus-visible{outline:2px solid var(--n-ivory);outline-offset:2px}
 .stage-note{flex:0 0 auto;text-align:center;margin:8px 0 2px;z-index:2;
-  font-family:var(--font-mono);font-size:.6875rem;line-height:1.45;letter-spacing:.04em;color:rgba(243,237,225,.72)}
-.work-media,.work-meta,.tile,.tile-b,.svc-body,.col-text,.facts,.grid-2>*,.stage,.stage-in,.phone,.phone img,.b-shot,.diagram{min-width:0}
-
-/* phones: the middle one is the hero of the three */
-/* each phone keeps the picture's own ratio: the height is the size we set, the width follows */
-.phone{position:relative;display:block;width:84%;text-decoration:none;color:inherit;margin:0;
-  padding:8px 5px 9px;border-radius:22px;border:1px solid rgba(243,237,225,.2);
+  font-family:var(--font-mono);font-size:.6875rem;line-height:1.45;letter-spacing:.04em;color:rgba(243,237,225,.78)}
+.work-media,.work-meta,.tile,.tile-b,.svc-body,.col-text,.facts,.grid-2>*,.stage,.row,.dev,.dev img,.illo,.diagram{min-width:0}
+.dev{position:relative;display:flex;flex-direction:column;width:auto;height:88%;max-width:100%;min-width:0;min-height:0;
+  aspect-ratio:var(--ar,.5);margin:0;padding:0;text-decoration:none;color:inherit;
+  transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out)}
+/* the middle frame is 8% larger at every width: a scale on its bottom edge keeps its
+   shape identical to its neighbours, keeps its base on the same line, and lets it lean
+   into the gap instead of being squashed by its own column on a narrow phone. */
+.dev-mid{z-index:3;transform:scale(1.08);transform-origin:bottom center}
+.slot .dev{align-self:end;justify-self:center}
+.dev-wide{width:100%;height:auto;max-height:100%;aspect-ratio:auto}
+.dev-wide .scr{flex:0 1 auto;aspect-ratio:var(--ar);height:auto}
+.r48{--ar:.48}.r50{--ar:.5}.r57{--ar:.57}.r59{--ar:.59}.r125{--ar:1.25}.r155{--ar:1.55}.r190{--ar:1.9}
+/* a wide page inside a narrow window reads from its left edge, the way a browser shows it */
+#more .dev-wide .scr img{object-position:0 0}
+.dev-bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;height:clamp(16px,7.5%,26px);
+  padding:0 8px;border-radius:9px 9px 0 0;background:linear-gradient(rgba(243,237,225,.11),rgba(243,237,225,.04));
+  border:1px solid rgba(243,237,225,.18);border-bottom:0}
+.dots{display:flex;gap:4px;flex:0 0 auto}
+.dots i{width:6px;height:6px;border-radius:50%;display:block;background:rgba(243,237,225,.42)}
+.dots i:nth-child(2){background:var(--n-gold)}
+.dots i:nth-child(3){background:var(--sky)}
+.url{flex:1 1 auto;min-width:0;font-size:.625rem;letter-spacing:.04em;color:rgba(243,237,225,.78);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:2px 7px;border-radius:5px;background:rgba(11,18,32,.5)}
+.url.tab{background:rgba(243,237,225,.12);border-radius:5px 5px 0 0;max-width:70%}
+.scr{position:relative;display:block;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--night)}
+.scr img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;border:0;background:var(--night)}
+/* the label sits under the frame, not on top of the picture: one line, ellipsed.
+   every box hangs it the same way, and the boxes share one baseline by construction. */
+/* one line under the frame, outside its bezel, as wide as the column rather than the phone:
+   it wraps instead of trailing off, and two lines are reserved so every frame in the row
+   keeps the same height and every label starts on the same line. */
+.cap{display:flex;align-items:flex-end;justify-content:center;justify-self:stretch;min-height:30px;
+  padding-top:3px;text-align:center;line-height:1.3;overflow-wrap:anywhere;
+  font-family:var(--font-mono);font-size:.5625rem;letter-spacing:.02em;text-transform:uppercase;
+  color:rgba(243,237,225,.74)}
+/* the phone: 8 px of bezel, a camera pill, two thin side buttons, one light edge */
+.phone{border-radius:22px;padding:8px 6px;
   background:
     linear-gradient(rgba(243,237,225,.5),rgba(243,237,225,.5)) right -1px top 20%/1.5px 13% no-repeat,
     linear-gradient(rgba(243,237,225,.5),rgba(243,237,225,.5)) right -1px top 37%/1.5px 9% no-repeat,
-    linear-gradient(rgba(243,237,225,.5),rgba(243,237,225,.5)) right -1px top 49%/1.5px 9% no-repeat,
     linear-gradient(rgba(243,237,225,.35),rgba(243,237,225,.35)) left -1px top 26%/1.5px 16% no-repeat,
     linear-gradient(180deg,#22324F,#0D1526 46%,#131E33);
-  box-shadow:0 26px 44px -24px rgba(0,0,0,.92),inset 0 1px 0 rgba(243,237,225,.14);
-  transform:translateY(4%);
-  transition:transform 220ms var(--ease-out)}
-.phone:last-child{transform:translateY(4%)}
-.phone-mid{width:100%;z-index:3;transform:none}
-.phone figure{display:block;margin:0;width:100%;height:auto;padding-bottom:6px}
-.phone img{width:100%;height:auto;border-radius:15px;border:0;background:var(--night);
-  box-shadow:0 0 0 1px rgba(243,237,225,.1),inset 0 0 12px rgba(0,0,0,.5);
-  transition:box-shadow 220ms var(--ease-out)}
-.phone::before{content:"";position:absolute;left:50%;top:2.5px;width:15px;height:2.5px;margin-left:-7.5px;z-index:3;
-  border-radius:2px;background:rgba(243,237,225,.3)}
-.phone figure{position:relative}
-.phone figure::after{content:"";position:absolute;left:50%;bottom:-6px;width:16px;height:2px;margin-left:-8px;z-index:3;
-  border-radius:2px;background:rgba(243,237,225,.16)}
-/* the phones carry no labels: the note under the stage says what they are, and the
-   lightbox shows each caption on tap. the framed shots below keep their own caption */
-.cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:14px 4px 6px;text-align:center;border-radius:0 0 12px 12px;
-  font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.04em;text-transform:uppercase;color:rgba(243,237,225,.92);
-  border-radius:0 0 15px 15px;background:linear-gradient(rgba(11,18,32,0),rgba(11,18,32,.84))}
-
-/* wide previews: one browser window, one ground, real ratio kept */
-.stage-wide .browser,.stage-flat .browser{flex:0 0 auto}
-.stage-wide .b-shot,.stage-flat .b-shot{flex:0 1 auto}
-.browser{display:flex;align-items:center;gap:10px;padding:0 10px;min-height:26px;border-radius:8px 8px 0 0;
-  background:rgba(243,237,225,.07);border:1px solid rgba(243,237,225,.16);border-bottom:0;width:100%}
-.b-dots{display:flex;gap:5px;flex:0 0 auto}
-.b-dots i{width:7px;height:7px;border-radius:50%;display:block;border:1px solid rgba(243,237,225,.3)}
-.b-dots i:nth-child(1){background:var(--n-ivory)}
-.b-dots i:nth-child(2){background:var(--n-gold);border-color:transparent}
-.b-dots i:nth-child(3){background:var(--sky);border-color:transparent}
-.b-addr{flex:1 1 auto;min-width:0;font-size:.6875rem;letter-spacing:.06em;color:rgba(243,237,225,.66);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:3px 8px;border-radius:5px;background:rgba(11,18,32,.5)}
-.b-shot{display:block;width:100%;min-height:0;border-radius:0 0 8px 8px;overflow:hidden;text-decoration:none}
-.b-shot img{width:100%;height:auto;max-height:100%;object-fit:contain}
-/* three framed shots on one stage: the middle one leads, the others lean behind it */
-.stage-shots .stage-in,.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;justify-items:center;width:100%;gap:2%;min-width:0}
-.shots{position:relative;z-index:1;padding:14px 0 22px}
-.shot{position:relative;display:block;width:100%;min-width:0;margin:0;
-  text-decoration:none;color:inherit;border-radius:8px;border:1px solid rgba(243,237,225,.2);
-  background:linear-gradient(180deg,#1B2A46,#0F1930);
-  box-shadow:0 20px 34px -22px rgba(0,0,0,.9),inset 0 1px 0 rgba(243,237,225,.1);
-  transform:translateY(6%);transition:transform 220ms var(--ease-out),box-shadow 220ms var(--ease-out)}
-.shot:last-child{transform:translateY(6%)}
-.shot figure{margin:0;display:block}
-.shot img{display:block;width:100%;height:auto;border-radius:0;background:var(--night)}
-.shot::before{content:"";position:absolute;left:0;right:0;top:0;height:9px;border-radius:7px 7px 0 0;
-  background:radial-gradient(circle 2.2px at 7px 4.5px,rgba(243,237,225,.55) 45%,transparent 55%),
-    radial-gradient(circle 2.2px at 14px 4.5px,rgba(214,164,92,.75) 45%,transparent 55%),
-    radial-gradient(circle 2.2px at 21px 4.5px,rgba(102,184,232,.7) 45%,transparent 55%),
-    linear-gradient(rgba(243,237,225,.09),rgba(243,237,225,.04))}
-.shot.is-pop{border-radius:12px;padding:0}
-.shot.is-pop img{border-radius:0 0 11px 11px}
-.shot.is-pop::before{height:7px;background:linear-gradient(rgba(243,237,225,.1),rgba(243,237,225,.03))}
-.shot.is-pop::after{content:"";position:absolute;top:-5px;right:14px;width:10px;height:6px;
-  background:linear-gradient(45deg,#1B2A46,#1B2A46);clip-path:polygon(0 100%,50% 0,100% 100%)}
-.shot:nth-child(2){z-index:3;transform:none;border-radius:10px}
-.shot:nth-child(2) img{border-radius:0 0 9px 9px}
-.shot .cap{position:static;padding:5px 6px 0;background:none;text-shadow:0 1px 2px rgba(11,18,32,.9);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.625rem}
-.flat-shot{position:relative;display:block;width:100%;min-width:0;text-decoration:none;color:inherit;border-radius:12px;
-  overflow:hidden;border:1px solid rgba(243,237,225,.2);box-shadow:0 18px 30px -22px rgba(0,0,0,.9)}
-.flat-shot img{width:100%;height:auto;display:block}
+  box-shadow:0 26px 44px -24px rgba(0,0,0,.92),inset 0 0 0 1px rgba(243,237,225,.14)}
+.phone .scr{border-radius:15px;box-shadow:0 0 0 1px rgba(243,237,225,.1),inset 0 0 12px rgba(0,0,0,.5)}
+.phone .cam{position:absolute;left:50%;top:3.5px;width:16px;height:3px;margin-left:-8px;z-index:3;
+  border-radius:2px;background:rgba(243,237,225,.34)}
+.phone .hm{position:absolute;left:50%;bottom:3.5px;width:22px;height:3px;margin-left:-11px;z-index:3;
+  border-radius:2px;background:rgba(243,237,225,.2)}
+/* the browser window: the same shell for a wide page and for a narrow responsive view */
+.win{border-radius:10px;background:linear-gradient(180deg,#1B2A46,#0F1930);
+  box-shadow:0 24px 40px -24px rgba(0,0,0,.9),inset 0 0 0 1px rgba(243,237,225,.16)}
+.win .scr{border-radius:0 0 9px 9px}
+/* the extension: a drawn toolbar strip, the real popup hanging under it */
+.ext{height:95%;width:100%;border-radius:12px;background:linear-gradient(180deg,#1B2A46,#0F1930);
+  box-shadow:0 22px 36px -24px rgba(0,0,0,.9),inset 0 0 0 1px rgba(243,237,225,.14)}
+.ext .ext-ico{flex:0 0 auto;display:flex;align-items:center;gap:5px;height:22px;padding:0 7px;
+  border-radius:11px 11px 0 0;background:linear-gradient(rgba(243,237,225,.13),rgba(243,237,225,.05))}
+.ext-ico i{display:block;width:26px;height:8px;border-radius:4px 4px 0 0;background:rgba(243,237,225,.14)}
+.ext-ico i:first-child{width:36px;background:rgba(243,237,225,.22)}
+.ext-ico b{margin-left:auto;display:block;width:15px;height:15px;flex:0 0 auto}
+.ext-ico svg{width:15px;height:15px;display:block;border-radius:4px}
+.ext .scr{flex:1 1 auto;display:flex;align-items:flex-start;justify-content:center;background:none;padding:2px 0 0}
+.ext .scr img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;
+  box-shadow:0 8px 18px -10px rgba(0,0,0,.8)}
+/* one wide panel that must not be cropped: it keeps its own ratio inside the same box */
+.flat{background:none;box-shadow:none;aspect-ratio:auto}
+.flat .scr{background:none;flex:0 1 auto}
+.flat .scr img{height:100%;object-fit:contain;border-radius:12px;
+  box-shadow:0 18px 30px -22px rgba(0,0,0,.9),inset 0 0 0 1px rgba(243,237,225,.14)}
+/* a drawing of a feature: the same frame, the same size, and it says what it is */
+.illo{display:block;width:100%;height:100%}
+.illo .bg{fill:#101B2F}
+.illo .card{fill:rgba(243,237,225,.07)}
+.illo .t1{fill:rgba(243,237,225,.66)}
+.illo .t2{fill:rgba(243,237,225,.34)}
+.illo .ln{fill:rgba(243,237,225,.26)}
+.illo .ln.s{fill:rgba(243,237,225,.16)}
+.illo .an,.illo .on{fill:var(--n-gold)}
+.illo .off{fill:rgba(243,237,225,.2)}
+.illo .miss{fill:rgba(243,237,225,.09);stroke:rgba(243,237,225,.22);stroke-width:1}
+.illo .rule{fill:rgba(243,237,225,.16)}
 .diagram{width:100%;height:100%;display:grid;align-items:center;padding:4px;color:var(--n-ivory)}
 .diagram svg{width:100%;height:auto;color:rgba(243,237,225,.8)}
 .ico-card{display:grid;place-items:center;gap:10px;width:100%;height:100%;min-height:0;
   border:1px dashed rgba(243,237,225,.26);border-radius:12px;color:var(--n-ivory);text-align:center;padding:14px}
 .ico-card .ico{width:34px;height:34px}
 .ico-t{font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,237,225,.74)}
-
 /* ---------- 01 · featured work rows ---------- */
 .work{display:grid;gap:44px}
 .work-item{display:grid;gap:22px;padding-top:56px;border-top:1px solid var(--line)}
@@ -319,7 +349,6 @@ body.menu-open .menu-close{display:inline}
 .status.ok{color:var(--ink)}
 .status.ok::before{border-color:var(--accent);background:var(--accent)}
 .work-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-
 /* ---------- marquee ---------- */
 .mq{overflow:hidden;padding-block:16px;background:var(--night);border-block:1px solid rgba(243,237,225,.14);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
@@ -330,17 +359,23 @@ body.menu-open .menu-close{display:inline}
   color:rgba(243,237,225,.72);white-space:nowrap}
 .mq-row span[aria-hidden]{color:var(--n-gold);opacity:.6}
 @keyframes mq-run{to{transform:translate3d(-50%,0,0)}}
-
 /* ---------- 02 · more work: two across, then one ---------- */
 .grid-2{display:grid;gap:22px}
-.tiles{gap:30px}
-.tile{display:grid;gap:16px;padding:20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
-.tile-b{display:grid;gap:2px;align-content:start}
+/* four cards, four measures the same: equal rows, text clamped, buttons pinned to the bottom */
+.tiles{gap:24px;grid-auto-rows:1fr;align-items:stretch}
+.tile{display:flex;flex-direction:column;gap:14px;padding:20px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.tile .stage{flex:0 0 auto}
+.tile-b{display:flex;flex:1 1 auto;flex-direction:column;min-height:0}
 .tile-b .work-title{margin-top:0}
-.tile-d{margin-top:8px;color:var(--ink-2);font-size:.9375rem;line-height:1.6}
+.tile-d{margin-top:8px;color:var(--ink-2);font-size:.9375rem;line-height:1.6;
+  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;
+  min-height:calc(3 * 1.6 * .9375rem)}
+.tile .status{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;
+  min-height:calc(2 * 1.55 * .875rem);margin-top:0}
 .tile-row{margin-top:10px}
 .tile-row .status{margin-top:0}
-
+.tile-btns{margin-top:auto;padding-top:12px}
+.tile .tags{margin-top:12px}
 /* ---------- 03 · services ---------- */
 .services{display:grid;gap:0;border-top:1px solid var(--line)}
 .services li{position:relative;display:flex;flex-wrap:wrap;align-items:flex-start;gap:14px 16px;
@@ -369,49 +404,47 @@ body.menu-open .menu-close{display:inline}
   .svc-body p{margin-top:1px}
   .svc-go{padding:10px 0 10px 10px;white-space:nowrap}
 }
-
 /* ---------- 04 · how I work ---------- */
-.how{display:grid;gap:18px;counter-reset:none}
-.how li{padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.how{display:grid;gap:18px;grid-auto-rows:1fr}
+.how li{display:flex;flex-direction:column;padding:20px 22px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.how li p{flex:1 1 auto;margin-bottom:0}
 .how .n{font-size:.6875rem;letter-spacing:.2em;color:var(--accent-deep)}
 .how h3{font-family:var(--font-display);font-weight:600;font-size:1.1875rem;margin-top:6px;letter-spacing:-.01em}
 .how p{margin-top:6px;font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:40ch}
-
 /* ---------- 05 · about ---------- */
 .two-col{display:grid;gap:28px}
 .col-text p{font-size:1.0625rem;line-height:1.72;color:var(--ink-2);max-width:62ch}
 .col-text p+p{margin-top:14px}
 .col-text .lead{color:var(--ink);font-size:1.1875rem;line-height:1.6}
-.facts{display:grid;gap:0;border-top:1px solid var(--line)}
-.facts li{display:grid;gap:2px;padding:12px 0;border-bottom:1px solid var(--line)}
+.facts{display:grid;gap:0;border-top:1px solid var(--line);grid-auto-rows:1fr}
+.facts li{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:12px 0;border-bottom:1px solid var(--line)}
 .facts .mono{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 .facts b{font-size:.9375rem;font-weight:600;letter-spacing:-.005em}
-
 /* ---------- 06 · contact ---------- */
 .band-contact{padding-bottom:70px}
 .band-contact .shead h2{color:var(--n-ivory)}
 .band-contact .sintro{color:rgba(243,237,225,.8)}
 .contact-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
-.contact-cta .btn-xl{--btn-bg:var(--n-gold);--btn-fg:var(--night);box-shadow:0 16px 34px -16px rgba(214,164,92,.5);flex:1 1 320px;max-width:520px}
-.tiles-3{display:grid;gap:0;margin-top:26px;border-top:1px solid rgba(243,237,225,.16)}
-.tile-3{display:grid;gap:3px;min-height:60px;padding:14px 2px;border-bottom:1px solid rgba(243,237,225,.16);
-  color:var(--n-ivory);text-decoration:none;transition:transform 140ms var(--ease-out)}
-.tile-3 .mono{font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--n-gold)}
-.tile-3 b{font-weight:600;font-size:.9375rem;overflow-wrap:anywhere}
-.tile-3 small{font-size:.8125rem;color:rgba(243,237,225,.66)}
-
+.contact-cta{margin-top:8px}
+.contact-cta .ib{box-shadow:0 14px 30px -18px rgba(0,0,0,.8)}
+.contact-nums{margin-top:20px;font-size:.8125rem;letter-spacing:.06em;color:rgba(243,237,225,.86)}
+.contact-note{margin-top:6px;font-size:.8125rem;line-height:1.6;color:rgba(243,237,225,.78);max-width:48ch}
 /* ---------- footer ---------- */
 .foot{background:var(--night);color:rgba(243,237,225,.86);padding:60px 0 54px;border-top:1px solid rgba(243,237,225,.16)}
 .foot-in{display:grid;gap:14px}
 .foot-big{font-family:var(--font-display);font-weight:600;font-size:clamp(1.85rem,5.4vw,3.4rem);
   line-height:1.04;letter-spacing:-.036em;color:var(--n-ivory);max-width:24ch}
 .foot-note{font-size:.9375rem;line-height:1.6;color:rgba(243,237,225,.7);max-width:60ch}
-.foot-links{display:flex;flex-wrap:wrap;gap:4px 20px}
-.foot-links a{display:inline-flex;align-items:center;min-height:48px;color:rgba(243,237,225,.86);text-decoration:none;
+.foot-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px}
+.foot-links a{display:inline-flex;align-items:center;gap:9px;min-height:48px;color:rgba(243,237,225,.86);text-decoration:none;
   font-family:var(--font-mono);font-size:.8125rem;letter-spacing:.06em;transition:color 140ms linear}
 .foot-links a:hover{color:var(--n-gold)}
-.foot-legal{font-size:.75rem;letter-spacing:.06em;color:rgba(243,237,225,.55)}
-
+.foot-top{padding:0 6px}
+.foot-top .mi{width:24px;height:24px}
+.foot-top .bob{width:18px;height:18px;flex:0 0 auto;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.foot-legal{display:flex;align-items:center;gap:10px;font-size:.75rem;letter-spacing:.06em;color:rgba(243,237,225,.62)}
+.foot-legal .mi{width:24px;height:24px}
 /* ---------- lightbox: one screenshot, big ---------- */
 .lb{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:16px}
 .lb[hidden]{display:none}
@@ -425,14 +458,12 @@ body.lb-open{overflow:hidden}
 .lb-x{min-height:48px;padding:0 18px;border-radius:999px;font:inherit;font-weight:600;font-size:.875rem;cursor:pointer;
   background:rgba(243,237,225,.1);color:var(--n-ivory);border:1px solid rgba(243,237,225,.28)}
 .lb-x:hover{background:rgba(243,237,225,.18)}
-
 /* ---------- 768 ---------- */
 @media (min-width:600px){
   .how{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (min-width:768px){
-  /* six links plus the WhatsApp pill only fit in one row from here down */
-  .nav a{display:inline-flex}
+  /* the links go inline at 920, where the row has room for them and the two icon buttons */
   :root{--pad:32px;--bar-h:64px}
   .band{padding:96px 0;scroll-margin-top:calc(var(--bar-h) + 14px)}
   .shead{margin-bottom:38px}
@@ -446,22 +477,19 @@ body.lb-open{overflow:hidden}
   .proof{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 26px}
   .proof li{border-bottom:0;border-top:0;padding:14px 0}
   .work-item{align-items:center;gap:34px;padding-top:56px}
-
   .services li{gap:16px 22px}
   .how{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
   .how li{padding:16px}
   .tiles-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;border-top:0}
-  .tile-3{border-top:1px solid rgba(243,237,225,.16);padding:16px 2px}
   .foot-in{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:start;column-gap:40px}
   .foot-links{grid-column:2;justify-self:end;text-align:right}
   .foot-legal{grid-column:1/-1}
 }
-
 /* ---------- 1280 ---------- */
 @media (min-width:1024px){
   .grid-2{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-  .work-item{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;padding-top:64px}
-  .work-rev{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr)}
+  /* one measure for every stage: equal columns, so the box inside is equal too */
+  .work-item,.work-rev{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:34px;padding-top:64px;align-items:center}
   .work-rev .work-media{order:2}
   .two-col{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:44px;align-items:start}
   .facts li{grid-template-columns:104px minmax(0,1fr);align-items:baseline;gap:16px}
@@ -475,17 +503,15 @@ body.lb-open{overflow:hidden}
   .band{padding:128px 0}
   .shead{margin-bottom:46px}
   .work{gap:0}
-  .work-item{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;padding-top:96px}
-  .work-rev{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+  .work-item,.work-rev{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;padding-top:96px}
   .work-item:first-child{padding-top:0}
   .work-title{font-size:2.125rem;letter-spacing:-.022em}
-  .cap{font-size:.75rem}
+  .cap{font-size:.5625rem}
   .stage-note{font-size:.75rem}
   .how{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
   .how li{padding:16px}
   .how p{max-width:34ch}
 }
-
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion: no-preference){
   html{scroll-behavior:smooth}
@@ -504,7 +530,6 @@ body.lb-open{overflow:hidden}
 @keyframes word-rise{from{transform:translateY(112%)}to{transform:translateY(0)}}
 @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes kick{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
 /* pointer-only extras: cursor, sheen, stage hover. never on touch */
 @media (hover:hover) and (pointer:fine){
   .cur-dot,.cur-ring{position:fixed;top:0;left:0;z-index:90;pointer-events:none;opacity:0}
@@ -519,31 +544,28 @@ body.lb-open{overflow:hidden}
   body.cur-link .cur-ring i{transform:scale(1.85);background-color:rgba(214,164,92,.92);border-color:transparent}
   body.cur-link .cur-ring span{opacity:1}
   body.cur-img .cur-ring i{transform:scale(2.1);background-color:rgba(102,184,232,.24);border-color:rgba(102,184,232,.6)}
-  /* the trio opens up a little, and one sheen crosses the middle phone */
-  .phone{will-change:transform}
-  .phone-mid{border-radius:22px}
-  .phone-mid::after{content:"";position:absolute;inset:8px 5px 9px;border-radius:15px;pointer-events:none;opacity:0;
-    background:linear-gradient(104deg,transparent 36%,rgba(243,237,225,.3) 48%,transparent 60%);
+  /* the trio opens up a little, and one sheen crosses the middle screen */
+  .dev{will-change:transform}
+  .dev-mid .scr::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:linear-gradient(104deg,transparent 36%,rgba(243,237,225,.28) 48%,transparent 60%);
     transform:translate3d(-120%,0,0)}
-  .stage:hover .phone{transform:translateX(-9px) translateY(2%)}
-  .stage:hover .phone:last-child{transform:translateX(9px) translateY(2%)}
-  .stage:hover .phone-mid{transform:translateY(-3px)}
-  .stage:hover .phone-mid img{box-shadow:0 26px 46px -22px rgba(0,0,0,.85)}
-  .phone-mid:hover::after{opacity:1;animation:sheen 620ms var(--ease-out) 1 both}
+  .stage:hover .row>.slot:nth-child(1) .dev{transform:translateX(-9px)}
+  .stage:hover .row>.slot:nth-child(3) .dev{transform:translateX(9px)}
+  .stage:hover .dev-mid{transform:translateY(-3px) scale(1.08)}
+  .stage:hover .dev-wide{transform:translateY(-3px)}
+  .dev-mid:hover .scr::after{opacity:1;animation:sheen 620ms var(--ease-out) 1 both}
   @keyframes sheen{from{transform:translate3d(-120%,0,0)}to{transform:translate3d(120%,0,0)}}
   .tile,.how li{transition:transform 160ms var(--ease-out),box-shadow 160ms var(--ease-out)}
   .tile:hover,.how li:hover{transform:translateY(-3px);box-shadow:0 16px 30px -22px rgba(16,26,46,.5)}
-  .b-shot:hover img{transform:translateY(-2px);transition:transform 220ms var(--ease-out)}
   .services li:hover .svc-body,.services li:hover .svc-ico,.services li:hover .svc-idx{transform:translateX(8px)}
   .services li:hover .svc-go{transform:translateX(-8px)}
   .services li:hover .svc-go{color:var(--accent-deep)}
   .services li:hover .svc-go .ico{transform:translateX(4px)}
   .services li:hover .svc-idx{color:var(--accent-deep)}
   .services li:hover .svc-ico{border-color:var(--line-2)}
-  .stage-flat:hover img,.stage-wide:hover .b-shot img{transform:scale(1.012)}
-  .flat-shot img,.b-shot img{transition:transform 420ms var(--ease-out)}
+  .stage-flat:hover .dev img,.stage-row:hover .dev img{transform:scale(1.012)}
+  .dev img{transition:transform 420ms var(--ease-out)}
 }
-
 /* lite mode: the cheap version of the same page, structure intact */
 html.lite .hero-bg,html.lite .mq-row,html.lite .name .w-in,html.lite .shead .num,html.lite .shead h2,html.lite .shead .sintro{animation:none!important}
 html.lite .hero-spot,html.lite .cur-dot,html.lite .cur-ring{display:none}
@@ -551,64 +573,50 @@ html.lite .bar,html.lite .glass{background:rgba(11,18,32,.97);-webkit-backdrop-f
 html.lite .bar.is-day{background:rgba(246,241,231,.97);color:var(--ink)}
 html.lite .progress{display:none}
 html.lite .reveal{opacity:1;transform:none}
-html.lite .phone::after{display:none}
-
+html.lite .dev,html.lite .dev img{transition:none}
+html.lite .bob{animation:none}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .hero-bg,.mq-row,.phone-mid:hover::after{animation:none!important}
+  .hero-bg,.mq-row,.dev-mid:hover .scr::after,.bob{animation:none!important}
   .hero-spot,.cur-dot,.cur-ring{display:none}
   .progress{display:none}
   .reveal,.name .word,.name .w-in,.shead .num,.shead h2,.shead .sintro{opacity:1;transform:none;animation:none!important}
-  .phone,.phone img,.tile,.how li,.b-shot img{transition:none!important}
+  .dev,.dev img,.tile,.how li{transition:none!important}
 }
-
 /* ---------- small phones ---------- */
-@media (max-width:599px){
+/* under 920 the row never fits: the sheet and its button cover every one of those widths */
+@media (max-width:919.98px){
   .menu-btn{display:inline-flex}
+  /* the section links fold into a sheet under the bar: same links, same anchors */ .nav-list{position:fixed;left:0;right:0;top:var(--bar-h);z-index:39;display:grid;gap:2px; padding:8px 14px 16px;background:#0B1220;border-bottom:1px solid rgba(243,237,225,.16); transform:translateY(-8px);opacity:0;visibility:hidden;pointer-events:none} body.menu-open .nav-list{transform:none;opacity:1;visibility:visible;pointer-events:auto} /* the bar's backdrop-filter group eats the background of anything that spills out of thebar's own box, so the sheet gets a solid bar while it is open */ body.menu-open .bar{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0B1220} @media (prefers-reduced-motion: no-preference){ .nav-list{transition:transform 240ms var(--ease-out),opacity 160ms linear,visibility 0s 240ms} body.menu-open .nav-list{transition:transform 240ms var(--ease-out),opacity 160ms linear,visibility 0s} } body.menu-open .nav-list a{display:flex;width:100%;min-height:48px;padding:0 12px;border-radius:9px; font-size:1rem;color:rgba(243,237,225,.86);background:rgba(243,237,225,.06)} body.menu-open .nav-list a:active,body.menu-open .nav-list a:focus-visible{background:rgba(243,237,225,.12)} body.menu-open .nav-list a.is-now{color:var(--n-ivory);background:rgba(243,237,225,.1)} body.menu-open .nav-list a::after{display:none}
+}
+@media (max-width:599px){
   .services li{padding:20px 0}
   .svc-go{flex:1 0 100%;padding:0;margin-top:6px}
-  /* the section links fold into a sheet under the bar: same links, same anchors */
-  .nav-list{position:fixed;left:0;right:0;top:var(--bar-h);z-index:39;display:grid;gap:2px;
-    padding:8px 14px 16px;background:#0B1220;border-bottom:1px solid rgba(243,237,225,.16);
-    transform:translateY(-8px);opacity:0;visibility:hidden;pointer-events:none}
-  body.menu-open .nav-list{transform:none;opacity:1;visibility:visible;pointer-events:auto}
-  /* the bar's backdrop-filter group eats the background of anything that spills out of the
-     bar's own box, so the sheet gets a solid bar while it is open */
-  body.menu-open .bar{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0B1220}
-  @media (prefers-reduced-motion: no-preference){
-    .nav-list{transition:transform 240ms var(--ease-out),opacity 160ms linear,visibility 0s 240ms}
-    body.menu-open .nav-list{transition:transform 240ms var(--ease-out),opacity 160ms linear,visibility 0s}
-  }
-  body.menu-open .nav-list a{display:flex;width:100%;min-height:48px;padding:0 12px;border-radius:9px;
-    font-size:1rem;color:rgba(243,237,225,.86);background:rgba(243,237,225,.06)}
-  body.menu-open .nav-list a:active,body.menu-open .nav-list a:focus-visible{background:rgba(243,237,225,.12)}
-  body.menu-open .nav-list a.is-now{color:var(--n-ivory);background:rgba(243,237,225,.1)}
-  body.menu-open .nav-list a::after{display:none}
   .tile{padding:12px}
-  /* three upright screens side by side need room, so on a phone the stage is only as
-     tall as the middle screen and the two behind it lean less */
-  .stage{padding:12px 12px 10px;min-height:0}
-  .phone{padding:6px 4px 7px;border-radius:18px;width:29%}
-  .phone img{border-radius:12px}
-  .phone::before{top:2px;width:12px;height:2px;margin-left:-6px}
-  .phone figure::after{bottom:-5px;width:13px}
-  .cap{border-radius:0 0 12px 12px}
-  .shots{grid-template-columns:minmax(0,1fr);gap:10px;padding:6px 0 4px}
-  /* the three popup panels read as one set, so they stay side by side */
-  .shots-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-  .shot,.shot:nth-child(2),.shot:last-child,.shot.is-pop{width:100%;transform:none;margin:0}
-  .shots{gap:0}
-  .shot .cap{text-align:left;padding:6px 2px 0}
-  .stage-note{margin:8px 2px 0;font-size:.625rem}
-  /* three upright screens side by side, the middle one full width of its column */
-  .stage-in{padding:10px 0 22px}
-  .phone,.phone:last-child{width:92%;transform:translateY(3%)}
-  .phone-mid{width:100%;transform:none}
+  /* the box keeps one ratio at every width, so the frames inside simply get smaller */
+  .stage{padding:10px 10px 8px;min-height:0;border-radius:18px;aspect-ratio:4/3}
+  .row{gap:7px}
+  .phone{padding:5px 4px;border-radius:15px}
+  .phone .scr{border-radius:10px}
+  .phone .cam{top:2px;width:11px;height:2px;margin-left:-5.5px}
+  .phone .hm{bottom:2px;width:15px;height:2px;margin-left:-7.5px}
+  .win,.ext{border-radius:8px}
+  .win .scr{border-radius:0 0 7px 7px}
+  .dev-bar{gap:5px;padding:0 5px}
+  .dots i{width:5px;height:5px}
+  .url{display:none}
+  .cap{font-size:.5rem;letter-spacing:0}
+  .stage-note{margin:7px 2px 0;font-size:.625rem}
 }
 /* the narrowest phones: the grid keeps the trio whole, only the page padding shrinks */
 @media (max-width:374px){
   :root{--pad:16px}
   .btn{padding:0 15px}
-  .phone,.phone-mid{width:100%}
-  .b-addr{display:none}
+  .dots{display:none}
+  .dev-bar{justify-content:center}
+}
+
+/* one row of bar: measured 838 px of brand + six links + two icon buttons + gaps */
+@media (min-width:920px){
+  .nav a{display:inline-flex}
 }

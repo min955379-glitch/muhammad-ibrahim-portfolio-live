@@ -1,6 +1,6 @@
 /* Muhammad Ibrahim - portfolio. Vanilla JS only, no libraries, no network calls.
    Jobs: scroll progress + bar day/night, section highlight, reveals, the counter,
-   the screenshot lightbox, and the pointer-only layer (cursor, spotlight, magnet).
+   the screenshot lightbox, the menu sheet, Back to top, and the pointer-only layer.
    Everything here is optional: the page reads fine with JS switched off. */
 (function () {
   "use strict";
@@ -35,15 +35,17 @@
   function openMenu() {
     doc.body.classList.add("menu-open", "no-scroll");
     menuBtn.setAttribute("aria-expanded", "true");
+    menuBtn.setAttribute("aria-label", "Close menu");
     if (menuLinks[0]) { menuLinks[0].focus(); }
   }
   function closeMenu(back) {
     doc.body.classList.remove("menu-open", "no-scroll");
     menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Open menu");
     if (back && menuBtn) { menuBtn.focus(); }
   }
   if (menuBtn && navList) {
-    var mqSheet = window.matchMedia("(min-width: 768px)");
+    var mqSheet = window.matchMedia("(min-width: 920px)");
     var tooWide = function () { return !!(mqSheet && mqSheet.matches); };
     menuBtn.addEventListener("click", function () {
       if (tooWide()) { return; }
@@ -69,11 +71,21 @@
       else if (!e.shiftKey && doc.activeElement === last) { e.preventDefault(); first.focus(); }
     });
     /* wide enough for the inline row? then the sheet has nothing to do */
-    var mqWide = window.matchMedia("(min-width: 768px)");
+    var mqWide = window.matchMedia("(min-width: 920px)");
     var onWide = function () { if (mqWide.matches && menuOpen()) { closeMenu(false); } };
     if (mqWide.addEventListener) { mqWide.addEventListener("change", onWide); }
     else if (mqWide.addListener) { mqWide.addListener(onWide); }
   }
+
+  /* ---------- Back to top: it scrolls, and the URL keeps the address it had ---------- */
+  [].forEach.call(doc.querySelectorAll("a[data-top]"), function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (menuOpen()) { closeMenu(false); }
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      if (doc.activeElement && doc.activeElement !== doc.body && doc.activeElement.blur) doc.activeElement.blur();
+    });
+  });
 
   /* ---------- one scroll handler: progress line, bar colour, section highlight ---------- */
   var prog = doc.getElementById("progress");
