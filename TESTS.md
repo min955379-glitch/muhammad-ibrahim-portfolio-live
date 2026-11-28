@@ -1,13 +1,60 @@
 # What was tested and what was not
 
-Date: 2026-11-27/28. Branch `arena/60aae8ed-muhammad-ibrahim-portfolio-liv` (rounds 3, 4 and 5, not deployed).
-Production still runs `main` = `4d6c8404` at
-`https://muhammad-ibrahim-portfolio-live.vercel.app/`.
+Date: 2026-11-27/28. Branch `arena/60aae8ed-…` carried rounds 3, 4 and 5; rounds 6 and on
+are on `arena/74147083-muhammad-ibrahim-portfolio-liv`, from `daa6b5f`.
+Production runs `main` = `daa6b5f` (rounds 1–5, merged) at
+`https://muhammad-ibrahim-portfolio-live.vercel.app/`; round 6 below is on this branch only.
 Everything below was measured in this sandbox against the files in this repo.
 The rig lives in `.verify/` (gitignored): a static server, a real headless Chromium
 (`puppeteer-core` + `@sparticuz/chromium`), and the checkers `check.js`, `dom-test.js`,
 `premium-test.js`, `contrast.js`, `verify.js`, `rm.js`, plus `extra.js` / `seams.js` for the
-section PNGs that were looked at by hand.
+section PNGs that were looked at by hand. Round 6 added `round6.js` (the geometry sweep, the
+float and the pixel contrast), `dom-rm.js` (markup and motion) and `probe6.js` (links, viewer,
+network); the round-5 files were not preserved in the sandbox, so round 6's three cover the
+same ground.
+
+## ROUND 6 — the columns face each other, and the arrow floats
+
+Three things, nothing else. On a PC screen the section headers, the *About* facts and the
+*Services* rows were written into the left of their row with the whole right side left empty;
+the back-to-top control lived in the footer, where it only appears after you have already
+reached the bottom; and the DailyMB row carried two drawings where its own real screens should
+have been. The wording, the colours, the type scale, the hero, the frames and the mobile
+layout are as they were.
+
+| what | before | after, measured at 1280 (a 1200 px wrap) |
+|---|---|---|
+| Section head | title 442 px wide, 798 px of blank to its right | the head is a grid: title 818 px on the left, its note 326 px on the right, both ending 40 px from the row's edge — the page gutter, not dead space |
+| About / *what I am not* | the two columns ended 260 px apart, and the fact labels and values had no columns at all | each fact row is a real `112px minmax(0,1fr)` grid; the text column is 624×236 and the facts 532×259, bottoms 23 px apart, the first line of prose 1 px from the first label |
+| Services rows | title top-aligned, the note under it, ~400 px of empty right | `align-items:center` at 900 and up, so icon, index, title, note and the *Ask on WhatsApp* link share one centre line (row 94 px, link x1080 of 1200) |
+| Contact | a 374 px note with 866 px empty beside it | the header and the contact block are one band that fills 93.8 % of the row, its two blocks level (bottoms 0 px apart) |
+| Back to top | a text link inside the footer | a 56 px round arrow fixed bottom-right: hidden at the top, in from 380 px of scroll, out again at the footer, hidden while the menu sheet or the screenshot viewer is open |
+| DailyMB | one real screen, two coded drawings | three real screens from the phone, padded to one height |
+
+The document went from 9 941 px to 8 821 px at 1280: less empty space, not less content.
+
+The arithmetic, so it can be checked instead of admired:
+
+- wrap = `min(1200, 100% − 2×40)`; at 1280 that is 1200 px, and `.shead` is now that wide
+  (`max-width:none` at ≥1024 instead of the old `46ch` cap on the whole block).
+- head grid ≥1024: `minmax(0,1fr) minmax(0,30ch)` + 40 px gap, `34ch` at ≥1280. With the note
+  at 46 px its column is 288 px (1024) / 326 px (1280), so the title keeps 632 px / 818 px and
+  wraps to two lines. `align-items:end` puts both on one baseline; `.num` spans both columns.
+- facts: 532 px column − 112 px label − 26 px gap = 394 px for the value, which is why the value
+  column can now be aligned to the text column's right edge (inner 708 → 1240 measured).
+- the DailyMB row's three frames are one `1fr 1fr 1fr` grid, so the 8 % middle emphasis and the
+  level captions came from the media system that was already there — no new rule per project.
+
+| Measured this round | Result |
+|---|---|
+| `check.js` | **0 fail / 82 pass** — the three fixes asserted (head grid, `#contact` band, `112px 1fr` facts, centred services, the float), plus the standing rules: no green in the UI, no Hindi/Urdu, no `#top`, no `scrollRestoration`, no price wording, `data-cap` on every shot link, tag balance, and the size caps. Two of its five initial fails were real leftovers and are fixed: dead `.nav-wa` / `.tiles-3` rules, and the whole `.illo` + `.diagram` block, dead once DailyMB had real screenshots |
+| `round6.js` | **0 fail** at 360 / 768 / 1024 / 1280 / 1440 / 1920: horizontal scroll 0 everywhere; every head ≥88 % of its row with ≤64 px of blank right; no `.step-card` and no tile differing in height at any width; per-stage frames equal with the middle 8 % bigger; captions level (≤1 px); tap targets ≥48 px; the only clipped text is the browser-bar mock, trimmed on purpose; the float shows at 1 400 px, hides at the top / footer / open viewer, gets a `:focus-visible` ring, and its click from 2 400 px returns to 0 px with `hash:""`. A reload at 2 600 px stayed at 2 600 px in the same section |
+| `dom-rm.js` | **0 fail / 13 pass** — every control named (a link holding an `<img alt>` counts), `aria-expanded` ⇄ and label ⇄ on the burger, the sheet's 6 links with its scroll lock and focus handed back on Esc, `lang="en"`, 1 `<h1>`, a skip link, `#anchor`s all resolving, and motion: `prefers-reduced-motion` leaves **0** animations, `lite` leaves 4 one-shot entrances with the hero glow and the marquee off and nothing looping, and no `transition` anywhere touches a layout property |
+| `probe6.js` | **0 fail / 23 pass** — 33 outbound links all `target=_blank` + `rel=noopener`, no Upwork / LinkedIn / socials, 9 WhatsApp buttons with the same English first message, no price wording, 27 `<img>`s decoded (the three DailyMB at 460×969), the viewer opening on a real file without moving the page and hiding the arrow, 0 console messages, 0 failed or 4xx requests |
+| contrast, from painted pixels | the ink is the element's own declared colour, the ground the colour actually behind it: `#services h2` 15.42:1, `#services .sintro` 7.86:1, `#process .how h3` 16.37:1, `#about .facts b` 15.42:1, `#about .facts .mono` **5.11:1** (the tightest run a visitor is asked to read), `#contact .contact-nums` 16.06:1, `#contact .contact-note` 8.47:1, the arrow 12.97:1 against its own circle. Sampling 11 px letters as pixels reads lower (4.25:1 at 1280) because a glyph that size is half anti-aliasing; the score quoted is the colour pair, and the pixel figure is printed beside it |
+| the two screenshots | `git show` of `0338821:images/dailymb-1.webp` and `5e8f241:images/dailymb-3.webp`, then padded — not cropped — to 460×969 with the app's own `#09120F` (417 px and 209 px of it, taken from the corner pixels of each file): 8.9 KB and 13.2 KB. Compared against the drawings in one PNG before deciding |
+| weights | `index.html` 54 626 B, `style.css` 45 548 B (< 60 KB), `script.js` 14 580 B (< 25 KB), 26 WebP 476 440 B (the 24 of round 5 plus the two DailyMB screens that came back), fonts 69 032 B → **636.8 KB** with every image and font (< 750 KB) |
+| eyes on PNGs | `#work`, `#services`, `#process`, `#about`, `#contact` and the DailyMB tile at 360 and 1280, services and contact at 768, the float over the mid page and over the open sheet — level columns, no clipped text, the arrow where it should be and gone where it should not |
 
 ## ROUND 5 — the monogram, the icons, the frames
 
@@ -110,11 +157,19 @@ ivory band is invisible to a background-colour guess).
 - `contrast.js` does not score text inside `aria-hidden="true"` decoration: the marquee's echo
   row of gold separators, and the drawn shapes inside the two DailyMB illustrations. Both are
   hidden from a screen reader. Every run a visitor is asked to read is scored.
-- The two DailyMB slots beside the real screenshot are drawings of features the README describes
-  (the Short-mode answer list, the 30-day history grid), not captures of the app. Each is
-  labelled "Illustration, not a screenshot" and carries a `role="img"` description; the stage
-  note says which of the three is real. The old `dailymb-1.webp` (green accents) and
-  `dailymb-3.webp` (a settings screen) were deleted rather than kept to fill the row.
+- Round 5 replaced the DailyMB row with two coded drawings; round 6 put the real screens back
+  (see `## ROUND 6`). Those two files are app captures that are shorter than the middle one, so
+  they are padded with the app's own background to reach one height rather than cropped or
+  stretched: the Streak and Settings pictures show the real screen and, under it, that screen's
+  own empty space. The stage note says so. The "Illustration, not a screenshot" labels and the
+  `.illo` / `.diagram` CSS went with the drawings; DaemonCut still carries "Concept artwork I
+  drew for this page".
+- Two of the recovered screens still show the app's own teal switches. Green inside a real
+  screenshot is what the app looks like; the rule is that nothing the page itself draws is green.
+- At 768 the head stays one column: the title runs the full 704 px and the note keeps its 46ch
+  reading measure, which leaves 206 px to the right of that paragraph. Two heads side by side
+  would give the note 174 px at that width. The facing grid starts at 1024, where there is room
+  for both columns to be readable. Mobile is unchanged from round 5.
 - The top bar shows its links in one row from 920 px up and folds them into the sheet below that.
   920 is measured (the row needs 838 px), not a device width; at 768 and 820 the bar therefore
   carries the burger, which is what keeps it one line tall there.
