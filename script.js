@@ -1,6 +1,6 @@
 /* Muhammad Ibrahim - portfolio. Vanilla JS only, no libraries, no network calls.
    Jobs: scroll progress + bar day/night, section highlight, reveals, the counter,
-   the screenshot lightbox, the menu sheet, Back to top, and the pointer-only layer.
+   the screenshot lightbox, the menu sheet, both Back to top buttons, and the pointer-only layer.
    Everything here is optional: the page reads fine with JS switched off. */
 (function () {
   "use strict";
@@ -89,6 +89,7 @@
 
   /* ---------- one scroll handler: progress line, bar colour, section highlight ---------- */
   var prog = doc.getElementById("progress");
+  var topBtn = doc.querySelector(".totop"), topShown = false;
   var barEl = doc.querySelector(".bar");
   var heroEl = doc.querySelector(".hero");
   var navLinks = [].slice.call(doc.querySelectorAll('.nav a[href^="#"]'));
@@ -134,6 +135,13 @@
     if (barEl) {
       var day = now !== null && now >= 0 && !!lightAt[now];
       if (day !== barEl.classList.contains("is-day")) barEl.classList.toggle("is-day", day);
+    }
+    /* the floating arrow arrives past the first screen and steps out for the footer's own one */
+    if (topBtn) {
+      var foot = doc.querySelector(".foot-top");
+      var clear = !foot || foot.getBoundingClientRect().top > (window.innerHeight || 0) - 96;
+      var want = y > (window.innerHeight || 700) * 0.9 && clear;
+      if (want !== topShown) { topShown = want; topBtn.classList.toggle("is-on", want); }
     }
   }
   function onScroll() { if (!queued) { queued = true; rAF(paint); } }
