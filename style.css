@@ -27,7 +27,7 @@
 /* ---------- base ---------- */
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--night);color:var(--ink);font-family:var(--font-body);
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);
   font-size:1rem;line-height:1.6;overflow-x:clip;text-rendering:optimizeLegibility}
 h1,h2,h3,p,ul,ol,figure{margin:0}
 ul,ol{list-style:none;padding:0}
@@ -100,6 +100,8 @@ body.menu-open .menu-close{display:inline}
 .nav a.nav-wa:hover{background:#E4B355;transform:translateY(-1px)}
 .bar.is-day{background:rgba(246,241,231,.86);border-bottom-color:var(--line);color:var(--ink)}
 .bar.is-day .brand,.bar.is-day .nav a{color:var(--ink-2)}
+/* the WhatsApp pill stands on gold, not on the bar's ground: its ink stays solid both ways */
+.bar.is-day .nav a.nav-wa,.bar.is-day .nav a.nav-wa:hover{color:var(--night)}
 .bar.is-day .brand-name{color:var(--ink)}
 .bar.is-day .mark{background:var(--deep);color:var(--bg)}
 .bar.is-day .nav a:hover,.bar.is-day .nav a.is-now{color:var(--ink)}
@@ -193,7 +195,7 @@ body.menu-open .menu-close{display:inline}
 /* ---------- the stage: one dark ground for every preview ---------- */
 .stage{position:relative;width:100%;display:flex;flex-direction:column;justify-content:center;
   align-items:stretch;overflow:hidden;min-height:210px;
-  padding:22px 20px 16px;border-radius:24px;border:1px solid rgba(243,237,225,.14);
+  padding:22px 20px 16px;border-radius:24px;border:1px solid rgba(16,26,46,.16);
   background:linear-gradient(160deg,#0B1220,#131E33 62%,#0B1220);color:var(--n-ivory)}
 .stage::before,.stage::after{content:"";position:absolute;inset:0;pointer-events:none}
 .stage::before{background:
@@ -210,6 +212,8 @@ body.menu-open .menu-close{display:inline}
    the two behind it sit back and a touch lower */
 .stage-in{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   align-items:center;justify-items:center;min-width:0;width:100%;height:auto;padding:16px 0 26px}
+/* the stage is dark on both grounds, so its focus ring is too */
+.stage :focus-visible{outline:2px solid var(--n-ivory);outline-offset:2px}
 .stage-note{flex:0 0 auto;text-align:center;margin:8px 0 2px;z-index:2;
   font-family:var(--font-mono);font-size:.6875rem;line-height:1.45;letter-spacing:.04em;color:rgba(243,237,225,.72)}
 .work-media,.work-meta,.tile,.tile-b,.svc-body,.col-text,.facts,.grid-2>*,.stage,.stage-in,.phone,.phone img,.b-shot,.diagram{min-width:0}
@@ -352,9 +356,10 @@ body.menu-open .menu-close{display:inline}
   letter-spacing:-.02em;line-height:1.2}
 .svc-body p{margin-top:6px;font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:56ch}
 /* the label is the whole row's link: one tap anywhere on the line opens WhatsApp */
+/* colour does the quiet/loud part, never opacity: faded text fails contrast */
 .svc-go{display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;min-height:48px;padding:0;
-  font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);
-  text-decoration:none;opacity:.7;transition:opacity 160ms linear}
+  font-size:.6875rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);
+  text-decoration:none;transition:color 160ms linear}
 .svc-go .ico{width:16px;height:16px;transition:transform 200ms var(--ease-out)}
 .svc-go::after{content:"";position:absolute;inset:0;z-index:2}
 .svc-go:focus-visible{outline-offset:-4px}
@@ -371,10 +376,6 @@ body.menu-open .menu-close{display:inline}
 .how .n{font-size:.6875rem;letter-spacing:.2em;color:var(--accent-deep)}
 .how h3{font-family:var(--font-display);font-weight:600;font-size:1.1875rem;margin-top:6px;letter-spacing:-.01em}
 .how p{margin-top:6px;font-size:.9375rem;line-height:1.6;color:var(--ink-2);max-width:40ch}
-.honest{margin-top:26px;padding:18px 20px;border-left:2px solid var(--accent);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0}
-.honest p{font-size:.9375rem;line-height:1.65;color:var(--ink-2);max-width:70ch}
-.honest p+p{margin-top:10px}
-.honest p:last-child{color:var(--ink);font-weight:600}
 
 /* ---------- 05 · about ---------- */
 .two-col{display:grid;gap:28px}
@@ -531,13 +532,13 @@ body.lb-open{overflow:hidden}
   .phone-mid:hover::after{opacity:1;animation:sheen 620ms var(--ease-out) 1 both}
   @keyframes sheen{from{transform:translate3d(-120%,0,0)}to{transform:translate3d(120%,0,0)}}
   .tile,.how li{transition:transform 160ms var(--ease-out),box-shadow 160ms var(--ease-out)}
-  .tile:hover,.how li:hover{transform:translateY(-3px);box-shadow:0 16px 30px -22px rgba(0,0,0,.5)}
+  .tile:hover,.how li:hover{transform:translateY(-3px);box-shadow:0 16px 30px -22px rgba(16,26,46,.5)}
   .b-shot:hover img{transform:translateY(-2px);transition:transform 220ms var(--ease-out)}
   .services li:hover .svc-body,.services li:hover .svc-ico,.services li:hover .svc-idx{transform:translateX(8px)}
   .services li:hover .svc-go{transform:translateX(-8px)}
-  .services li:hover .svc-go{opacity:1}
+  .services li:hover .svc-go{color:var(--accent-deep)}
   .services li:hover .svc-go .ico{transform:translateX(4px)}
-  .services li:hover .svc-idx{color:var(--n-gold)}
+  .services li:hover .svc-idx{color:var(--accent-deep)}
   .services li:hover .svc-ico{border-color:var(--line-2)}
   .stage-flat:hover img,.stage-wide:hover .b-shot img{transform:scale(1.012)}
   .flat-shot img,.b-shot img{transition:transform 420ms var(--ease-out)}
